@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strat Cat — AI for Restaurant Operators</title>
+  <meta name="description" content="Practical AI tools and GM playbooks for restaurant managers, owners, and workers. From a GM with 19 years on the floor. No tech-bro fluff." />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="Strat Cat — AI for Restaurant Operators" />
+  <meta property="og:description" content="AI that survives a real Friday night. Restaurant operations, done smarter." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CONFIG NOTE: Edit channel links, video IDs, and the email
+       form endpoint in the marked spots below + in the <script>
+       CONFIG block near the bottom. Search for "EDIT ME".
+       ============================================================ */
+
+    :root {
+      --bg:        #14110f;   /* near-black charcoal */
+      --bg-2:      #1d1916;
+      --surface:   #221d19;
+      --text:      #f4efe9;
+      --muted:     #a89c8e;
+      --accent:    #ff6b2c;   /* warm amber-orange */
+      --accent-2:  #ffb347;
+      --border:    #342d27;
+      --radius:    14px;
+      --maxw:      1080px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .display {
+      font-family: 'Barlow Condensed', 'Inter', sans-serif;
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- Header ---------- */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(20,17,15,0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
+    .brand .mark {
+      display: inline-grid; place-items: center;
+      width: 36px; height: 36px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #1a1310; font-size: 1.2rem;
+    }
+    .brand .accent { color: var(--accent); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 0.95rem;
+      padding: 9px 16px; border-radius: 999px;
+      background: var(--accent); color: #1a1310;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .nav-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      padding: clamp(56px, 9vw, 110px) 0 clamp(48px, 7vw, 84px);
+      background:
+        radial-gradient(1200px 500px at 70% -10%, rgba(255,107,44,0.16), transparent 60%),
+        radial-gradient(900px 500px at 0% 10%, rgba(255,179,71,0.08), transparent 55%);
+      overflow: hidden;
+    }
+    .eyebrow {
+      display: inline-block; font-weight: 600; font-size: 0.82rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-2);
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 6px 14px; margin-bottom: 22px;
+    }
+    .hero h1 { font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 800; max-width: 14ch; }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p.lede {
+      margin-top: 20px; font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+      color: var(--muted); max-width: 52ch;
+    }
+
+    /* ---------- Email signup ---------- */
+    .signup { margin-top: 36px; max-width: 520px; }
+    .signup-label { font-weight: 600; margin-bottom: 10px; font-size: 0.98rem; }
+    .signup-form { display: flex; gap: 10px; flex-wrap: wrap; }
+    .signup-form input[type="email"] {
+      flex: 1 1 240px; min-width: 0;
+      padding: 14px 16px; font-size: 1rem;
+      color: var(--text); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 12px;
+      outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .signup-form input[type="email"]::placeholder { color: #7d7064; }
+    .signup-form input[type="email"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,107,44,0.18);
+    }
+    .btn-primary {
+      flex: 0 0 auto;
+      padding: 14px 24px; font-size: 1rem; font-weight: 700;
+      font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.03em;
+      color: #1a1310; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none; border-radius: 12px; cursor: pointer;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .btn-primary:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .signup-note { margin-top: 10px; font-size: 0.85rem; color: var(--muted); }
+    .form-msg { margin-top: 12px; font-size: 0.95rem; font-weight: 500; min-height: 1.2em; }
+    .form-msg.ok { color: var(--accent-2); }
+    .form-msg.err { color: #ff7a7a; }
+
+    /* ---------- Section shell ---------- */
+    section.block { padding: clamp(56px, 8vw, 96px) 0; }
+    .block.alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section-head { margin-bottom: 36px; }
+    .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+    .section-head h2 .accent { color: var(--accent); }
+    .section-head p { margin-top: 12px; color: var(--muted); max-width: 56ch; font-size: 1.05rem; }
+
+    /* ---------- Video grid ---------- */
+    .video-grid {
+      display: grid; gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .video-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .video-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .video-embed {
+      position: relative; width: 100%; aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .video-embed iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+    }
+    .video-meta { padding: 16px 18px 20px; }
+    .video-meta h3 { font-size: 1.35rem; font-weight: 700; text-transform: none; font-family: 'Barlow Condensed'; letter-spacing: 0.01em; }
+    .video-meta p { margin-top: 6px; font-size: 0.92rem; color: var(--muted); }
+
+    .center-cta { text-align: center; margin-top: 44px; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; font-weight: 700; font-size: 1rem;
+      font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.03em;
+      border: 1.5px solid var(--accent); color: var(--accent);
+      border-radius: 999px; transition: background .15s ease, color .15s ease;
+    }
+    .btn-outline:hover { background: var(--accent); color: #1a1310; }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 44px 0; border-top: 1px solid var(--border); background: var(--bg); }
+    .foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .foot p { color: var(--muted); font-size: 0.9rem; }
+    .foot-links { display: flex; gap: 20px; }
+    .foot-links a { color: var(--muted); font-weight: 500; font-size: 0.92rem; transition: color .15s ease; }
+    .foot-links a:hover { color: var(--accent); }
+
+    /* ---------- Mobile ---------- */
+    @media (max-width: 560px) {
+      .nav-cta span.long { display: none; }
+      .signup-form .btn-primary { flex: 1 1 100%; }
+      .foot { justify-content: center; text-align: center; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Strat Cat home">
+        <span class="mark">🐱</span>
+        <span>Strat<span class="accent">Cat</span></span>
+      </a>
+      <!-- EDIT ME: set your real channel URL in CONFIG (script below) -->
+      <a class="nav-cta" id="navYouTube" href="#" target="_blank" rel="noopener">
+        ▶ <span class="long">Watch on</span> YouTube
+      </a>
+    </div>
+  </header>
+
+  <!-- ===================== HERO + EMAIL SIGNUP ===================== -->
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow">AI in the weeds · GM playbook · real talk</span>
+        <h1>AI that survives a real <span class="accent">Friday night.</span></h1>
+        <p class="lede">
+          Practical AI tools and management systems for restaurant operators —
+          from a GM with 19 years on the floor. No tech-bro hype. Just what
+          actually works when the kitchen's slammed and the POS is down.
+        </p>
+
+        <!-- ---------- Email signup ---------- -->
+        <div class="signup">
+          <div class="signup-label">Get the playbook in your inbox. One email, every week.</div>
+          <!--
+            EDIT ME: This posts to Formspree by default. Create a free form at
+            https://formspree.io, then set FORM_ENDPOINT in the CONFIG block below.
+            Until then, submissions show a friendly "not wired up yet" message.
+            (Prefer Mailchimp/ConvertKit/beehiiv/Substack? Swap the form action
+            for that provider's embed — the markup is standard.)
+          -->
+          <form class="signup-form" id="signupForm" novalidate>
+            <input
+              type="email" name="email" id="email"
+              placeholder="you@restaurant.com" autocomplete="email"
+              aria-label="Email address" required />
+            <button type="submit" class="btn-primary">Sign me up</button>
+          </form>
+          <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+          <p class="signup-note">No spam. No fluff. Unsubscribe anytime.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VIDEO SECTION ===================== -->
+    <section class="block alt" id="videos">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Latest <span class="accent">videos</span></h2>
+          <p>Real operational problems, solved on camera — with the exact prompts and inputs I used, not just the polished output.</p>
+        </div>
+
+        <!--
+          EDIT ME: Replace the 3 video IDs in the CONFIG block below with your
+          real YouTube video IDs (the part after "watch?v="). Titles/blurbs too.
+          Cards are generated from CONFIG so you only edit in one place.
+        -->
+        <div class="video-grid" id="videoGrid"></div>
+
+        <div class="center-cta">
+          <a class="btn-outline" id="seeAll" href="#" target="_blank" rel="noopener">
+            See all videos →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap foot">
+      <p>© <span id="year"></span> Strat Cat · AI for restaurant operators.</p>
+      <div class="foot-links">
+        <a id="footYouTube" href="#" target="_blank" rel="noopener">YouTube</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       EDIT ME — CONFIG: the only block you need to touch.
+       ============================================================ */
+    const CONFIG = {
+      // Your YouTube channel URL (or @handle page):
+      channelUrl: "https://www.youtube.com/@StratCat",   // EDIT ME
+
+      // Formspree form endpoint. Get one free at https://formspree.io
+      // Looks like: "https://formspree.io/f/abcdwxyz"
+      // Leave empty ("") to run in demo mode.
+      formEndpoint: "",                                  // EDIT ME
+
+      // Up to 3 featured videos. Use the ID from youtube.com/watch?v=THIS_PART
+      videos: [
+        { id: "dQw4w9WgXcQ", title: "How I write next week's schedule with AI in 10 minutes", blurb: "The exact prompt I paste in every Sunday." },
+        { id: "dQw4w9WgXcQ", title: "Inventory counts that don't eat your whole morning", blurb: "Cutting a 2-hour task down to 20 minutes." },
+        { id: "dQw4w9WgXcQ", title: "Training new hires without repeating yourself", blurb: "Turn your SOPs into a 24/7 answer bot." }
+      ]
+    };
+
+    /* ---------- Wire up links ---------- */
+    document.getElementById("navYouTube").href = CONFIG.channelUrl;
+    document.getElementById("footYouTube").href = CONFIG.channelUrl;
+    document.getElementById("seeAll").href = CONFIG.channelUrl;
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* ---------- Build video cards ---------- */
+    const grid = document.getElementById("videoGrid");
+    grid.innerHTML = CONFIG.videos.map(v => `
+      <article class="video-card">
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/${v.id}"
+            title="${v.title.replace(/"/g, '&quot;')}"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-meta">
+          <h3>${v.title}</h3>
+          <p>${v.blurb}</p>
+        </div>
+      </article>
+    `).join("");
+
+    /* ---------- Email signup handling ---------- */
+    const form = document.getElementById("signupForm");
+    const msg  = document.getElementById("formMsg");
+
+    function setMsg(text, type) {
+      msg.textContent = text;
+      msg.className = "form-msg " + (type || "");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+
+      // basic validation
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setMsg("That email doesn't look right — give it another shot.", "err");
+        return;
+      }
+
+      // Demo mode: no endpoint configured yet
+      if (!CONFIG.formEndpoint) {
+        setMsg("✓ Looks good! (Add your Formspree endpoint in CONFIG to start collecting emails.)", "ok");
+        form.reset();
+        return;
+      }
+
+      // Real submission
+      setMsg("Signing you up…", "");
+      try {
+        const res = await fetch(CONFIG.formEndpoint, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(form)
+        });
+        if (res.ok) {
+          setMsg("✓ You're in. Check your inbox to confirm.", "ok");
+          form.reset();
+        } else {
+          setMsg("Something went sideways. Try again in a sec.", "err");
+        }
+      } catch (err) {
+        setMsg("Network hiccup — try again in a moment.", "err");
+      }
+    });
+  </script>
+</body>
+</html>
