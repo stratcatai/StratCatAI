@@ -59,10 +59,8 @@
     }
     .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
     .brand { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
-    .brand .mark {
-      display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 9px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #1a1310; font-size: 1.2rem;
-    }
+    .brand .mark { display: inline-grid; place-items: center; width: 40px; height: 40px; color: var(--accent); }
+    .brand .mark svg { width: 100%; height: 100%; display: block; }
     .brand .accent { color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem;
@@ -196,9 +194,21 @@
   <!-- ===================== HEADER ===================== -->
   <header>
     <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Strat Cat AI home">
-        <span class="mark">🐱</span>
-        <span>Strat Cat<span class="accent"> AI</span></span>
+      <a class="brand" href="#top" aria-label="StratCat AI home">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 26 L13 9 L29 19" />
+            <path d="M48 26 L51 9 L35 19" />
+            <path d="M16 26 C13 38 18 47 26 50 C30 51.5 34 51.5 38 50 C46 47 51 38 48 26" />
+            <path d="M22 34 L29 37" />
+            <path d="M42 34 L35 37" />
+            <path d="M32 40 L29 44 L35 44 Z" fill="currentColor" stroke="none" />
+            <path d="M27 46 Q32 50 37 46" />
+            <path d="M24 45 L9 43 M24 48 L10 51" />
+            <path d="M40 45 L55 43 M40 48 L54 51" />
+          </svg>
+        </span>
+        <span>StratCat<span class="accent"> AI</span></span>
       </a>
       <!-- EDIT ME: channel URL is set in CONFIG (script below) -->
       <a class="nav-cta" id="navYouTube" href="#" target="_blank" rel="noopener">
@@ -283,7 +293,7 @@
   <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="wrap foot">
-      <p>© <span id="year"></span> Strat Cat AI · I test AI money ideas so you don't have to.</p>
+      <p>© <span id="year"></span> StratCat AI · I test AI money ideas so you don't have to. — SkeptikalKat 🐱</p>
       <div class="foot-links">
         <a id="footYouTube" href="#" target="_blank" rel="noopener">YouTube</a>
         <a href="#top">Back to top ↑</a>
