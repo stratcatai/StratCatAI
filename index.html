@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Strat Cat — AI for Restaurant Operators</title>
-  <meta name="description" content="Practical AI tools and GM playbooks for restaurant managers, owners, and workers. From a GM with 19 years on the floor. No tech-bro fluff." />
+  <title>Strat Cat AI — Does It Actually Work?</title>
+  <meta name="description" content="I risk my own time and money testing AI money-making ideas live — and share the real numbers so you only build what actually works. No hype, just receipts." />
 
   <!-- Open Graph / social preview -->
-  <meta property="og:title" content="Strat Cat — AI for Restaurant Operators" />
-  <meta property="og:description" content="AI that survives a real Friday night. Restaurant operations, done smarter." />
+  <meta property="og:title" content="Strat Cat AI — Does It Actually Work?" />
+  <meta property="og:description" content="I test AI money-making ideas live, with real capital, and show you the honest numbers — works, doesn't, or works-but." />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,123 +17,126 @@
 
   <style>
     /* ============================================================
-       CONFIG NOTE: Edit channel links, video IDs, and the email
-       form endpoint in the marked spots below + in the <script>
-       CONFIG block near the bottom. Search for "EDIT ME".
+       CONFIG NOTE: Edit channel link, video IDs, and the email
+       form endpoint in the <script> CONFIG block near the bottom.
+       Search for "EDIT ME".
        ============================================================ */
 
     :root {
-      --bg:        #14110f;   /* near-black charcoal */
+      --bg:        #14110f;
       --bg-2:      #1d1916;
       --surface:   #221d19;
       --text:      #f4efe9;
       --muted:     #a89c8e;
-      --accent:    #ff6b2c;   /* warm amber-orange */
+      --accent:    #ff6b2c;
       --accent-2:  #ffb347;
+      --pos:       #5fd08a;
+      --neg:       #ff7a7a;
       --border:    #342d27;
       --radius:    14px;
       --maxw:      1080px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      background: var(--bg); color: var(--text); line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
-
     h1, h2, h3, .display {
       font-family: 'Barlow Condensed', 'Inter', sans-serif;
-      line-height: 1.05;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
+      line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase;
     }
-
     a { color: inherit; text-decoration: none; }
-
     .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
 
     /* ---------- Header ---------- */
     header {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(20,17,15,0.82);
-      backdrop-filter: blur(10px);
+      background: rgba(20,17,15,0.82); backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
     .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
     .brand { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
     .brand .mark {
-      display: inline-grid; place-items: center;
-      width: 36px; height: 36px; border-radius: 9px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #1a1310; font-size: 1.2rem;
+      display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #1a1310; font-size: 1.2rem;
     }
     .brand .accent { color: var(--accent); }
     .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-weight: 600; font-size: 0.95rem;
-      padding: 9px 16px; border-radius: 999px;
-      background: var(--accent); color: #1a1310;
+      display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem;
+      padding: 9px 16px; border-radius: 999px; background: var(--accent); color: #1a1310;
       transition: transform .15s ease, filter .15s ease;
     }
     .nav-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
     /* ---------- Hero ---------- */
     .hero {
-      position: relative;
-      padding: clamp(56px, 9vw, 110px) 0 clamp(48px, 7vw, 84px);
+      position: relative; padding: clamp(48px, 8vw, 96px) 0 clamp(48px, 7vw, 84px);
       background:
-        radial-gradient(1200px 500px at 70% -10%, rgba(255,107,44,0.16), transparent 60%),
+        radial-gradient(1200px 500px at 75% -10%, rgba(255,107,44,0.18), transparent 60%),
         radial-gradient(900px 500px at 0% 10%, rgba(255,179,71,0.08), transparent 55%);
       overflow: hidden;
     }
+    .hero-inner { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
     .eyebrow {
-      display: inline-block; font-weight: 600; font-size: 0.82rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-2);
-      border: 1px solid var(--border); border-radius: 999px;
-      padding: 6px 14px; margin-bottom: 22px;
+      display: inline-block; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--accent-2);
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; margin-bottom: 22px;
     }
-    .hero h1 { font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 800; max-width: 14ch; }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800; max-width: 16ch; }
     .hero h1 .accent { color: var(--accent); }
-    .hero p.lede {
-      margin-top: 20px; font-size: clamp(1.05rem, 2.4vw, 1.3rem);
-      color: var(--muted); max-width: 52ch;
-    }
+    .hero p.lede { margin-top: 20px; font-size: clamp(1.05rem, 2.2vw, 1.28rem); color: var(--muted); max-width: 50ch; }
 
     /* ---------- Email signup ---------- */
-    .signup { margin-top: 36px; max-width: 520px; }
+    .signup { margin-top: 34px; max-width: 520px; }
     .signup-label { font-weight: 600; margin-bottom: 10px; font-size: 0.98rem; }
     .signup-form { display: flex; gap: 10px; flex-wrap: wrap; }
     .signup-form input[type="email"] {
-      flex: 1 1 240px; min-width: 0;
-      padding: 14px 16px; font-size: 1rem;
-      color: var(--text); background: var(--surface);
-      border: 1px solid var(--border); border-radius: 12px;
-      outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+      flex: 1 1 240px; min-width: 0; padding: 14px 16px; font-size: 1rem;
+      color: var(--text); background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; outline: none; transition: border-color .15s ease, box-shadow .15s ease;
     }
     .signup-form input[type="email"]::placeholder { color: #7d7064; }
-    .signup-form input[type="email"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(255,107,44,0.18);
-    }
+    .signup-form input[type="email"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,107,44,0.18); }
     .btn-primary {
-      flex: 0 0 auto;
-      padding: 14px 24px; font-size: 1rem; font-weight: 700;
+      flex: 0 0 auto; padding: 14px 24px; font-size: 1rem; font-weight: 700;
       font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.03em;
       color: #1a1310; background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border: none; border-radius: 12px; cursor: pointer;
-      transition: transform .15s ease, filter .15s ease;
+      border: none; border-radius: 12px; cursor: pointer; transition: transform .15s ease, filter .15s ease;
     }
     .btn-primary:hover { filter: brightness(1.07); transform: translateY(-1px); }
     .signup-note { margin-top: 10px; font-size: 0.85rem; color: var(--muted); }
     .form-msg { margin-top: 12px; font-size: 0.95rem; font-weight: 500; min-height: 1.2em; }
     .form-msg.ok { color: var(--accent-2); }
-    .form-msg.err { color: #ff7a7a; }
+    .form-msg.err { color: var(--neg); }
+
+    /* ---------- Hero visual: "live test" verdict card ---------- */
+    .hero-visual { display: flex; flex-direction: column; align-items: center; }
+    .verdict-card {
+      width: 100%; max-width: 380px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 22px 22px 18px; box-shadow: 0 24px 70px rgba(0,0,0,0.40);
+    }
+    .vc-head { display: flex; flex-direction: column; gap: 3px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .vc-tag { font-family: 'Barlow Condensed'; font-weight: 700; letter-spacing: 0.12em; font-size: 0.76rem; color: var(--accent); text-transform: uppercase; }
+    .vc-title { font-family: 'Barlow Condensed'; font-weight: 700; font-size: 1.5rem; }
+    .vc-rows { padding: 14px 0; display: flex; flex-direction: column; gap: 11px; }
+    .vc-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.98rem; color: var(--muted); }
+    .vc-row b { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; }
+    .vc-row .pos { color: var(--pos); }
+    .vc-row .neg { color: var(--neg); }
+    .vc-row.total { border-top: 1px dashed var(--border); padding-top: 13px; margin-top: 2px; }
+    .vc-row.total span { color: var(--text); font-weight: 600; }
+    .vc-row.total b { font-size: 1.15rem; }
+    .vc-verdict { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .vc-verdict-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .vc-badge {
+      font-family: 'Barlow Condensed'; font-weight: 800; font-size: 1.05rem; letter-spacing: 0.03em;
+      color: #1a1310; background: linear-gradient(135deg, var(--accent), var(--accent-2)); padding: 6px 14px; border-radius: 8px;
+    }
+    .vc-caption { text-align: center; margin-top: 14px; font-size: 0.85rem; color: var(--muted); }
 
     /* ---------- Section shell ---------- */
     section.block { padding: clamp(56px, 8vw, 96px) 0; }
@@ -141,46 +144,28 @@
     .section-head { margin-bottom: 36px; }
     .section-head h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
     .section-head h2 .accent { color: var(--accent); }
-    .section-head p { margin-top: 12px; color: var(--muted); max-width: 56ch; font-size: 1.05rem; }
+    .section-head p { margin-top: 12px; color: var(--muted); max-width: 60ch; font-size: 1.05rem; }
 
     /* ---------- Video grid ---------- */
-    .video-grid {
-      display: grid; gap: 22px;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-    .video-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden;
-      transition: transform .18s ease, border-color .18s ease;
-    }
+    .video-grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .video-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .18s ease, border-color .18s ease; }
     .video-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-    .video-embed {
-      position: relative; width: 100%; aspect-ratio: 16 / 9;
-      background: #000;
-    }
-    .video-embed iframe {
-      position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
-    }
+    .video-embed { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+    .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .video-meta { padding: 16px 18px 20px; }
     .video-meta h3 { font-size: 1.35rem; font-weight: 700; text-transform: none; font-family: 'Barlow Condensed'; letter-spacing: 0.01em; }
     .video-meta p { margin-top: 6px; font-size: 0.92rem; color: var(--muted); }
 
     /* "Coming soon" panel shown when no videos are configured */
-    .coming-soon {
-      grid-column: 1 / -1; text-align: center;
-      background: var(--surface); border: 1px dashed var(--border);
-      border-radius: var(--radius); padding: clamp(40px, 7vw, 72px) 24px;
-    }
+    .coming-soon { grid-column: 1 / -1; text-align: center; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: clamp(40px, 7vw, 72px) 24px; }
     .coming-soon h3 { font-family: 'Barlow Condensed'; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; }
-    .coming-soon p { color: var(--muted); max-width: 46ch; margin: 12px auto 22px; }
+    .coming-soon p { color: var(--muted); max-width: 50ch; margin: 12px auto 22px; }
 
     .center-cta { text-align: center; margin-top: 44px; }
     .btn-outline {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 28px; font-weight: 700; font-size: 1rem;
+      display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; font-weight: 700; font-size: 1rem;
       font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.03em;
-      border: 1.5px solid var(--accent); color: var(--accent);
-      border-radius: 999px; transition: background .15s ease, color .15s ease;
+      border: 1.5px solid var(--accent); color: var(--accent); border-radius: 999px; transition: background .15s ease, color .15s ease;
     }
     .btn-outline:hover { background: var(--accent); color: #1a1310; }
 
@@ -192,17 +177,18 @@
     .foot-links a { color: var(--muted); font-weight: 500; font-size: 0.92rem; transition: color .15s ease; }
     .foot-links a:hover { color: var(--accent); }
 
-    /* ---------- Mobile ---------- */
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { order: 2; margin-top: 8px; }
+      .verdict-card { max-width: 420px; }
+    }
     @media (max-width: 560px) {
       .nav-cta span.long { display: none; }
       .signup-form .btn-primary { flex: 1 1 100%; }
       .foot { justify-content: center; text-align: center; }
     }
-
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; transition: none !important; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
   </style>
 </head>
 <body>
@@ -210,11 +196,11 @@
   <!-- ===================== HEADER ===================== -->
   <header>
     <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Strat Cat home">
+      <a class="brand" href="#top" aria-label="Strat Cat AI home">
         <span class="mark">🐱</span>
-        <span>Strat<span class="accent">Cat</span></span>
+        <span>Strat Cat<span class="accent"> AI</span></span>
       </a>
-      <!-- EDIT ME: set your real channel URL in CONFIG (script below) -->
+      <!-- EDIT ME: channel URL is set in CONFIG (script below) -->
       <a class="nav-cta" id="navYouTube" href="#" target="_blank" rel="noopener">
         ▶ <span class="long">Watch on</span> YouTube
       </a>
@@ -224,56 +210,69 @@
   <!-- ===================== HERO + EMAIL SIGNUP ===================== -->
   <main id="top">
     <section class="hero">
-      <div class="wrap">
-        <span class="eyebrow">AI in the weeds · GM playbook · real talk</span>
-        <h1>AI that survives a real <span class="accent">Friday night.</span></h1>
-        <p class="lede">
-          Practical AI tools and management systems for restaurant operators —
-          from a GM with 19 years on the floor. No tech-bro hype. Just what
-          actually works when the kitchen's slammed and the POS is down.
-        </p>
+      <div class="wrap hero-inner">
+        <div class="hero-content">
+          <span class="eyebrow">Does it actually work? · Live tests · Real receipts</span>
+          <h1>I risk my time and money testing AI ideas. <span class="accent">You get the truth.</span></h1>
+          <p class="lede">
+            Don't waste days on unverified AI side hustles. I run live, real-world
+            experiments with my own capital and share the exact numbers — so you
+            only build what actually works.
+          </p>
 
-        <!-- ---------- Email signup ---------- -->
-        <div class="signup">
-          <div class="signup-label">Get the playbook in your inbox. One email, every week.</div>
-          <!--
-            EDIT ME: This posts to Formspree by default. Create a free form at
-            https://formspree.io, then set FORM_ENDPOINT in the CONFIG block below.
-            Until then, submissions show a friendly "not wired up yet" message.
-            (Prefer Mailchimp/ConvertKit/beehiiv/Substack? Swap the form action
-            for that provider's embed — the markup is standard.)
-          -->
-          <form class="signup-form" id="signupForm" novalidate>
-            <input
-              type="email" name="email" id="email"
-              placeholder="you@restaurant.com" autocomplete="email"
-              aria-label="Email address" required />
-            <button type="submit" class="btn-primary">Sign me up</button>
-          </form>
-          <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-          <p class="signup-note">No spam. No fluff. Unsubscribe anytime.</p>
+          <!-- ---------- Email signup ---------- -->
+          <div class="signup">
+            <div class="signup-label">Get the next verdict in your inbox. Every test, the real numbers, zero hype.</div>
+            <form class="signup-form" id="signupForm" novalidate>
+              <input type="email" name="email" id="email" placeholder="you@email.com" autocomplete="email" aria-label="Email address" required />
+              <button type="submit" class="btn-primary">Get the next verdict</button>
+            </form>
+            <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+            <p class="signup-note">No hype. No spam. Unsubscribe anytime.</p>
+          </div>
+        </div>
+
+        <!-- ---------- Hero visual: live-test verdict card ----------
+             EDIT ME (optional): Swap this whole card for a real screenshot
+             or a short clip once you have one — e.g. drop in:
+             <img src="your-dashboard.png" alt="Real test numbers" style="max-width:420px;width:100%;border-radius:16px;" />
+        -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="verdict-card">
+            <div class="vc-head">
+              <span class="vc-tag">Live Test · #001</span>
+              <span class="vc-title">AI "Faceless" Channel</span>
+            </div>
+            <div class="vc-rows">
+              <div class="vc-row"><span>Time invested</span><b>14 hrs</b></div>
+              <div class="vc-row"><span>Money in</span><b class="pos">$312</b></div>
+              <div class="vc-row"><span>Money out</span><b class="neg">−$180</b></div>
+              <div class="vc-row total"><span>Net result</span><b class="pos">+$132</b></div>
+            </div>
+            <div class="vc-verdict">
+              <span class="vc-verdict-label">The verdict</span>
+              <span class="vc-badge">Works, but…</span>
+            </div>
+          </div>
+          <p class="vc-caption">Real numbers. Honest verdict. Every test.</p>
         </div>
       </div>
     </section>
 
-    <!-- ===================== VIDEO SECTION ===================== -->
+    <!-- ===================== VIDEO / LIVE TEST SECTION ===================== -->
     <section class="block alt" id="videos">
       <div class="wrap">
         <div class="section-head">
-          <h2>Latest <span class="accent">videos</span></h2>
-          <p>Real operational problems, solved on camera — with the exact prompts and inputs I used, not just the polished output.</p>
+          <h2>The live <span class="accent">tests</span></h2>
+          <p>Real experiments putting AI money-making ideas to the test — actual capital on the line, the exact numbers, and an honest verdict every time.</p>
         </div>
 
-        <!--
-          EDIT ME: Replace the 3 video IDs in the CONFIG block below with your
-          real YouTube video IDs (the part after "watch?v="). Titles/blurbs too.
-          Cards are generated from CONFIG so you only edit in one place.
-        -->
+        <!-- EDIT ME: add real video IDs in the CONFIG block below. Empty = "coming soon" panel. -->
         <div class="video-grid" id="videoGrid"></div>
 
         <div class="center-cta">
           <a class="btn-outline" id="seeAll" href="#" target="_blank" rel="noopener">
-            See all videos →
+            See the latest live test on my channel →
           </a>
         </div>
       </div>
@@ -283,7 +282,7 @@
   <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="wrap foot">
-      <p>© <span id="year"></span> Strat Cat · AI for restaurant operators.</p>
+      <p>© <span id="year"></span> Strat Cat AI · I test AI money ideas so you don't have to.</p>
       <div class="foot-links">
         <a id="footYouTube" href="#" target="_blank" rel="noopener">YouTube</a>
         <a href="#top">Back to top ↑</a>
@@ -296,15 +295,12 @@
        EDIT ME — CONFIG: the only block you need to touch.
        ============================================================ */
     const CONFIG = {
-      // Your YouTube channel URL (or @handle page):
-      channelUrl: "https://www.youtube.com/@stratcatai", // EDIT ME
+      // Your YouTube channel URL (the @ matters):
+      channelUrl: "https://www.youtube.com/@stratcatai",  // EDIT ME
 
-      // Formspree form endpoint. Get one free at https://formspree.io
-      // Looks like: "https://formspree.io/f/abcdwxyz"
-      // Leave empty ("") to run in demo mode.
-      formEndpoint: "https://formspree.io/f/xlgydyyl",   // EDIT ME
+      // Formspree form endpoint (https://formspree.io). "" = demo mode.
+      formEndpoint: "https://formspree.io/f/xlgydyyl",    // EDIT ME
 
-      // Up to 3 featured videos. Use the ID from youtube.com/watch?v=THIS_PART
       // Add up to 3 when ready: { id: "VIDEO_ID", title: "...", blurb: "..." }
       // (VIDEO_ID is the part after youtube.com/watch?v=). Empty = "coming soon" panel.
       videos: []
@@ -323,13 +319,13 @@
     if (!CONFIG.videos.length) {
       grid.innerHTML = `
         <div class="coming-soon">
-          <h3>Fresh videos dropping soon 🐱</h3>
-          <p>New breakdowns on running a tighter restaurant with AI are in the works. Subscribe and you'll catch the first one the moment it lands.</p>
+          <h3>First live test dropping soon 🐱</h3>
+          <p>I'm putting real money on the line to find out whether these AI money-making ideas actually work. Subscribe and you'll see the first verdict the moment it's in.</p>
           <a class="btn-primary" style="display:inline-block; text-decoration:none;"
-             href="${CONFIG.channelUrl}" target="_blank" rel="noopener">▶ Subscribe on YouTube</a>
+             href="${CONFIG.channelUrl}" target="_blank" rel="noopener">▶ Subscribe on Strat Cat AI</a>
         </div>`;
       document.querySelector(".section-head p").textContent =
-        "Real operational problems, solved on camera — with the exact prompts I used, not just the polished output. First episodes are on the way.";
+        "Real experiments putting AI money-making ideas to the test — actual capital on the line, the exact numbers, and an honest verdict. First tests dropping soon.";
       if (seeAllWrap) seeAllWrap.style.display = "none";
     } else {
       grid.innerHTML = CONFIG.videos.map(v => `
@@ -363,20 +359,17 @@
       e.preventDefault();
       const email = document.getElementById("email").value.trim();
 
-      // basic validation
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setMsg("That email doesn't look right — give it another shot.", "err");
         return;
       }
 
-      // Demo mode: no endpoint configured yet
       if (!CONFIG.formEndpoint) {
         setMsg("✓ Looks good! (Add your Formspree endpoint in CONFIG to start collecting emails.)", "ok");
         form.reset();
         return;
       }
 
-      // Real submission
       setMsg("Signing you up…", "");
       try {
         const res = await fetch(CONFIG.formEndpoint, {
@@ -385,7 +378,7 @@
           body: new FormData(form)
         });
         if (res.ok) {
-          setMsg("✓ You're in. Check your inbox to confirm.", "ok");
+          setMsg("✓ You're in. Check your inbox to confirm — then watch for the next verdict.", "ok");
           form.reset();
         } else {
           setMsg("Something went sideways. Try again in a sec.", "err");
