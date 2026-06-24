@@ -1,5 +1,6 @@
 .claude/
 CLAUDE.md
+SESSION-NOTES.md
 *.log
 .DS_Store
 Thumbs.db
