@@ -301,8 +301,8 @@
       // Your YouTube channel URL (the @ matters):
       channelUrl: "https://www.youtube.com/@stratcatai",  // EDIT ME
 
-      // Formspree form endpoint (https://formspree.io). "" = demo mode.
-      formEndpoint: "https://formspree.io/f/xlgydyyl",    // EDIT ME
+      // beehiiv subscribe page — the form hands off here to finish signup + welcome email.
+      beehiivSubscribeUrl: "https://stratcatai.beehiiv.com/subscribe",  // EDIT ME
 
       // Add up to 3: { id: "VIDEO_ID", title: "...", blurb: "..." }
       // (VIDEO_ID is the part after youtube.com/watch?v= or youtu.be/). Empty = "coming soon" panel.
@@ -360,7 +360,7 @@
       msg.className = "form-msg " + (type || "");
     }
 
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       const email = document.getElementById("email").value.trim();
 
@@ -369,28 +369,9 @@
         return;
       }
 
-      if (!CONFIG.formEndpoint) {
-        setMsg("✓ Looks good! (Add your Formspree endpoint in CONFIG to start collecting emails.)", "ok");
-        form.reset();
-        return;
-      }
-
-      setMsg("Signing you up…", "");
-      try {
-        const res = await fetch(CONFIG.formEndpoint, {
-          method: "POST",
-          headers: { "Accept": "application/json" },
-          body: new FormData(form)
-        });
-        if (res.ok) {
-          setMsg("✓ You're on the list. The next verdict lands straight in your inbox.", "ok");
-          form.reset();
-        } else {
-          setMsg("Something went sideways. Try again in a sec.", "err");
-        }
-      } catch (err) {
-        setMsg("Network hiccup — try again in a moment.", "err");
-      }
+      // Hand off to beehiiv with the email prefilled; beehiiv finishes signup + sends the welcome email.
+      setMsg("Taking you to confirm your spot…", "ok");
+      window.location.href = CONFIG.beehiivSubscribeUrl + "?email=" + encodeURIComponent(email);
     });
   </script>
 </body>
