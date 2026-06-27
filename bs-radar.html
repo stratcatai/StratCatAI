@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BS Radar — Pressure-test any AI money claim · StratCat AI</title>
+  <meta name="description" content="Paste any AI 'make money' claim, guru pitch, or tool promise. BS Radar scores how much it reeks of hype — and shows you exactly which red flags fired. Free, no signup, runs in your browser." />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="BS Radar — Pressure-test any AI money claim" />
+  <meta property="og:description" content="Paste a hype claim. Get a BS score and the receipts on why. Free, no signup, by StratCat AI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://stratcatai.github.io/StratCatAI/banner.png" />
+
+  <link rel="icon" type="image/png" href="images/logo-square-transparent.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       BS Radar — a static, client-side hype detector for StratCat AI.
+       100% in-browser. No backend, no API key, no tracking.
+       The whole rule-set lives in the RULES block in the <script>
+       near the bottom — that's the only place to tune scoring.
+       ============================================================ */
+
+    :root {
+      --bg:        #14110f;
+      --bg-2:      #1d1916;
+      --surface:   #221d19;
+      --surface-2: #2a241f;
+      --text:      #f4efe9;
+      --muted:     #a89c8e;
+      --accent:    #ff6b2c;
+      --accent-2:  #ffb347;
+      --pos:       #5fd08a;
+      --warn:      #ffb347;
+      --neg:       #ff7a7a;
+      --border:    #342d27;
+      --radius:    14px;
+      --maxw:      1080px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, .display {
+      font-family: 'Barlow Condensed', 'Inter', sans-serif;
+      line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- Header ---------- */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(20,17,15,0.82); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
+    .brand .mark { display: inline-grid; place-items: center; width: 40px; height: 40px; }
+    .brand .mark img { width: 100%; height: 100%; display: block; border-radius: 9px; object-fit: cover; }
+    .brand .accent { color: var(--accent); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem;
+      padding: 9px 16px; border-radius: 999px; background: var(--accent); color: #1a1310;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .nav-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; padding: clamp(40px, 6vw, 72px) 0 clamp(20px, 3vw, 32px);
+      background:
+        radial-gradient(1200px 500px at 75% -10%, rgba(255,107,44,0.18), transparent 60%),
+        radial-gradient(900px 500px at 0% 10%, rgba(255,179,71,0.08), transparent 55%);
+      overflow: hidden;
+    }
+    .eyebrow {
+      display: inline-block; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--accent-2);
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 6.5vw, 4.4rem); font-weight: 800; max-width: 16ch; }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p.lede { margin-top: 18px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); max-width: 56ch; }
+
+    /* ---------- Tool ---------- */
+    .tool { padding: clamp(28px, 4vw, 40px) 0 clamp(48px, 7vw, 80px); }
+    .tool-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: clamp(20px, 3vw, 30px);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+    }
+    .tool-label { font-family: 'Barlow Condensed'; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.15rem; }
+    .tool-sub { color: var(--muted); font-size: 0.95rem; margin-top: 4px; margin-bottom: 16px; }
+    textarea#claim {
+      width: 100%; min-height: 130px; resize: vertical; padding: 16px;
+      font-family: inherit; font-size: 1.02rem; line-height: 1.5;
+      color: var(--text); background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 12px; outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    textarea#claim::placeholder { color: #7d7064; }
+    textarea#claim:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,107,44,0.16); }
+
+    .examples { margin-top: 14px; }
+    .examples-label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 9px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+    .chip {
+      font-size: 0.86rem; color: var(--text); background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px;
+      cursor: pointer; transition: border-color .15s ease, transform .12s ease, background .15s ease;
+    }
+    .chip:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+    .run-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+    .btn-primary {
+      padding: 14px 30px; font-size: 1.05rem; font-weight: 700;
+      font-family: 'Barlow Condensed'; text-transform: uppercase; letter-spacing: 0.04em;
+      color: #1a1310; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: none; border-radius: 12px; cursor: pointer; transition: transform .15s ease, filter .15s ease;
+    }
+    .btn-primary:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .btn-ghost {
+      padding: 13px 18px; font-size: 0.95rem; font-weight: 600; color: var(--muted);
+      background: transparent; border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+      transition: color .15s ease, border-color .15s ease;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ---------- Results ---------- */
+    .results { margin-top: 26px; display: none; }
+    .results.show { display: block; animation: rise .35s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    .verdict-top {
+      display: grid; grid-template-columns: 200px 1fr; gap: 26px; align-items: center;
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px;
+    }
+    .gauge-wrap { display: flex; flex-direction: column; align-items: center; }
+    .gauge { position: relative; width: 180px; height: 110px; }
+    .gauge svg { width: 100%; height: 100%; overflow: visible; }
+    .gauge-num {
+      position: absolute; left: 0; right: 0; bottom: 2px; text-align: center;
+      font-family: 'Barlow Condensed'; font-weight: 800; font-size: 2.6rem; line-height: 1;
+    }
+    .gauge-num small { font-size: 1rem; color: var(--muted); font-weight: 600; }
+    .gauge-cap { margin-top: 4px; font-size: 0.74rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .verdict-meta { min-width: 0; }
+    .verdict-badge {
+      display: inline-block; font-family: 'Barlow Condensed'; font-weight: 800;
+      font-size: 1.5rem; letter-spacing: 0.03em; text-transform: uppercase;
+      padding: 8px 18px; border-radius: 10px; color: #1a1310;
+    }
+    .verdict-say { margin-top: 14px; font-size: 1.06rem; color: var(--text); }
+    .verdict-say .cat { color: var(--accent); font-weight: 600; }
+
+    .breakdown { margin-top: 22px; display: grid; gap: 22px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 720px) { .breakdown { grid-template-columns: 1fr; } }
+    .panel h3 { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .panel h3 .count { font-family: 'Inter'; font-size: 0.8rem; color: var(--muted); font-weight: 500; text-transform: none; letter-spacing: 0; }
+    .flag-list { display: flex; flex-direction: column; gap: 10px; }
+    .flag {
+      background: var(--surface); border: 1px solid var(--border); border-left-width: 3px;
+      border-radius: 10px; padding: 12px 14px;
+    }
+    .flag.red { border-left-color: var(--neg); }
+    .flag.green { border-left-color: var(--pos); }
+    .flag-name { font-weight: 600; font-size: 0.96rem; }
+    .flag-why { color: var(--muted); font-size: 0.88rem; margin-top: 3px; }
+    .flag-hit { margin-top: 7px; font-size: 0.85rem; color: var(--text); }
+    .flag-hit span { background: rgba(255,107,44,0.14); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; margin: 2px 4px 2px 0; display: inline-block; }
+    .flag.green .flag-hit span { background: rgba(95,208,138,0.13); }
+    .empty-note { color: var(--muted); font-size: 0.9rem; background: var(--surface); border: 1px dashed var(--border); border-radius: 10px; padding: 14px; }
+
+    .disclaimer {
+      margin-top: 22px; font-size: 0.85rem; color: var(--muted);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+    }
+    .disclaimer b { color: var(--text); font-weight: 600; }
+
+    /* ---------- Subscribe CTA ---------- */
+    .cta-band { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: clamp(40px, 6vw, 64px) 0; }
+    .cta-band h2 { font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800; }
+    .cta-band h2 .accent { color: var(--accent); }
+    .cta-band p { color: var(--muted); margin-top: 10px; max-width: 54ch; font-size: 1.05rem; }
+    .signup-form { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; max-width: 520px; }
+    .signup-form input[type="email"] {
+      flex: 1 1 240px; min-width: 0; padding: 14px 16px; font-size: 1rem;
+      color: var(--text); background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .signup-form input[type="email"]::placeholder { color: #7d7064; }
+    .signup-form input[type="email"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,107,44,0.18); }
+    .form-msg { margin-top: 12px; font-size: 0.95rem; font-weight: 500; min-height: 1.2em; }
+    .form-msg.ok { color: var(--accent-2); }
+    .form-msg.err { color: var(--neg); }
+    .signup-note { margin-top: 10px; font-size: 0.85rem; color: var(--muted); }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 44px 0; border-top: 1px solid var(--border); background: var(--bg); }
+    .foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .foot p { color: var(--muted); font-size: 0.9rem; }
+    .foot-links { display: flex; gap: 20px; }
+    .foot-links a { color: var(--muted); font-weight: 500; font-size: 0.92rem; transition: color .15s ease; }
+    .foot-links a:hover { color: var(--accent); }
+
+    @media (max-width: 620px) {
+      .verdict-top { grid-template-columns: 1fr; text-align: center; }
+      .gauge-wrap { margin: 0 auto; }
+      .nav-cta span.long { display: none; }
+      .foot { justify-content: center; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="index.html" aria-label="StratCat AI home">
+        <span class="mark"><img src="images/logo-square-transparent.png" alt="StratCat AI cat logo" /></span>
+        <span>StratCat<span class="accent"> AI</span></span>
+      </a>
+      <a class="nav-cta" id="navYouTube" href="https://www.youtube.com/@stratcatai" target="_blank" rel="noopener">
+        ▶ <span class="long">Watch on</span> YouTube
+      </a>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow">Free tool · No signup · Runs in your browser</span>
+        <h1>BS <span class="accent">Radar</span></h1>
+        <p class="lede">
+          Paste any AI "make money" claim, guru pitch, video title, or tool promise.
+          BS Radar pressure-tests it for hype and hands you a score — plus the
+          <strong>receipts</strong>: exactly which red flags fired, and why. No magic box.
+          Just the same BS detector I point at everything.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== THE TOOL ===================== -->
+    <section class="tool">
+      <div class="wrap">
+        <div class="tool-card">
+          <div class="tool-label">Drop the claim in here 👇</div>
+          <div class="tool-sub">A headline, a course pitch, a thread, a tool's landing-page copy — whatever someone's trying to sell you on.</div>
+
+          <textarea id="claim" placeholder="e.g. Make $10,000/month with AI on complete autopilot — no skills, no experience needed. The secret the gurus don't want you to know. Free for a limited time, just drop your email before it's gone!"></textarea>
+
+          <div class="examples">
+            <div class="examples-label">Or try one of these</div>
+            <div class="chips" id="chips"></div>
+          </div>
+
+          <div class="run-row">
+            <button class="btn-primary" id="runBtn">Run BS Radar →</button>
+            <button class="btn-ghost" id="clearBtn">Clear</button>
+          </div>
+
+          <!-- ---------- Results ---------- -->
+          <div class="results" id="results" aria-live="polite">
+            <div class="verdict-top">
+              <div class="gauge-wrap">
+                <div class="gauge">
+                  <svg viewBox="0 0 180 110">
+                    <path d="M 12 100 A 78 78 0 0 1 168 100" fill="none" stroke="var(--border)" stroke-width="14" stroke-linecap="round"/>
+                    <path id="gaugeArc" d="M 12 100 A 78 78 0 0 1 168 100" fill="none" stroke="var(--accent)" stroke-width="14" stroke-linecap="round"
+                          stroke-dasharray="245" stroke-dashoffset="245"/>
+                  </svg>
+                  <div class="gauge-num"><span id="scoreNum">0</span><small>/100</small></div>
+                </div>
+                <div class="gauge-cap">BS Score</div>
+              </div>
+              <div class="verdict-meta">
+                <span class="verdict-badge" id="verdictBadge">—</span>
+                <p class="verdict-say"><span class="cat">🐱 The cat says:</span> <span id="catSay"></span></p>
+              </div>
+            </div>
+
+            <div class="breakdown">
+              <div class="panel">
+                <h3>🚩 Red flags <span class="count" id="redCount"></span></h3>
+                <div class="flag-list" id="redList"></div>
+              </div>
+              <div class="panel">
+                <h3>✅ Honesty signals <span class="count" id="greenCount"></span></h3>
+                <div class="flag-list" id="greenList"></div>
+              </div>
+            </div>
+
+            <div class="disclaimer">
+              <b>How this works (because we don't do mystery boxes):</b> BS Radar is a transparent
+              keyword-and-pattern scorer running entirely in your browser — no AI guessing, no data sent
+              anywhere. It catches the <i>language</i> of hype, not the truth of a specific claim. A high score
+              means "this smells like a sales pitch," not "this is definitely a scam." Low score isn't a
+              green light either — it just means they're not screaming. Always check the actual receipts. That's the whole channel.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SUBSCRIBE CTA ===================== -->
+    <section class="cta-band">
+      <div class="wrap">
+        <h2>Like having a working <span class="accent">BS detector?</span></h2>
+        <p>I build one of these every time I test an AI money claim live — and send the honest verdict, real numbers and all, straight to your inbox. No hype. No spam.</p>
+        <form class="signup-form" id="signupForm" novalidate>
+          <input type="email" name="email" id="email" placeholder="you@email.com" autocomplete="email" aria-label="Email address" required />
+          <button type="submit" class="btn-primary">Get the next verdict</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+        <p class="signup-note">No hype. No spam. Unsubscribe anytime.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap foot">
+      <p>© <span id="year"></span> StratCat AI · I test AI money ideas so you don't have to. — StratCat 🐱</p>
+      <div class="foot-links">
+        <a href="index.html">Home</a>
+        <a id="footYouTube" href="https://www.youtube.com/@stratcatai" target="_blank" rel="noopener">YouTube</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       CONFIG — same handles as the main site.
+       ============================================================ */
+    const CONFIG = {
+      channelUrl: "https://www.youtube.com/@stratcatai",
+      beehiivSubscribeUrl: "https://stratcatai.beehiiv.com/"
+    };
+
+    /* ============================================================
+       RULES — the entire scoring brain. Tune freely.
+       Each rule: a category of hype (or honesty), the patterns that
+       trigger it, points per hit, a cap on how many hits count, and
+       a plain-English reason shown to the user as the "receipt."
+       'kind' = "red" (adds BS) or "green" (subtracts BS).
+       ============================================================ */
+    const RULES = [
+      // ---------------- RED: the hallmarks of a pitch ----------------
+      {
+        kind: "red", name: "Big income promise", points: 22, cap: 2,
+        why: "Specific money claims with no method or proof attached are the #1 hype tell.",
+        patterns: [
+          /\$\s?\d[\d,]*\s?(k|m)?\b(?:[\s\/+-]*(?:a|per|\/)?\s*(?:day|wk|week|mo|month|yr|year|hour|hr))?/i,
+          /\b\d[\d,]*\s?(?:dollars|bucks)\b/i,
+          /\b(six|seven|multiple six|5|6|7)[\s-]?figure(s)?\b/i,
+          /\bpassive income\b/i,
+          /\b(make|earn|made|earning|pull(?:ing)?)\s+(?:over\s+)?\$?\d/i
+        ]
+      },
+      {
+        kind: "red", name: "Effortless / autopilot", points: 20, cap: 2,
+        why: "Real money takes real work. 'Set it and forget it' is the fantasy they're selling.",
+        patterns: [
+          /\bon\s+(?:complete\s+)?autopilot\b/i, /\bwhile you sleep\b/i,
+          /\bset (?:it )?and forget\b/i, /\b(hands[\s-]?free|hands[\s-]?off)\b/i,
+          /\beffortless(ly)?\b/i, /\bno (?:work|effort|skills?|experience|coding)\b/i,
+          /\bzero (?:work|effort|skills?|experience|coding)\b/i, /\bautomat(?:ed|ic|ically)\b.*\bincome\b/i,
+          /\bdo(?:es)? (?:all )?the work for you\b/i, /\banyone can (?:do|make)\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Manufactured urgency / scarcity", points: 18, cap: 2,
+        why: "Fake deadlines exist to stop you thinking. A real opportunity is still there tomorrow.",
+        patterns: [
+          /\blimited[\s-]?time\b/i, /\bbefore (?:it'?s|its) (?:gone|too late)\b/i,
+          /\b(closing|expir\w+|ending) soon\b/i, /\bact now\b/i, /\bdon'?t (?:wait|miss)\b/i,
+          /\b(?:only|just)\s+\d+\s+(?:spots?|seats?|spaces?|left)\b/i, /\bspots?\s+(?:are\s+)?(?:filling|left|running out)\b/i,
+          /\bgrab (?:it|yours|this)\b/i, /\bwhile (?:it'?s|supplies|it) last/i, /\bhurry\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Secret / guru bait", points: 13, cap: 3,
+        why: "The 'hidden trick they don't want you to know' framing. There's rarely a secret — just a checkout page.",
+        patterns: [
+          /\bsecret(s)?\b/i, /\b(?:they|gurus?|banks?|experts?|youtube) (?:don'?t|do not) want you to know\b/i,
+          /\bnobody (?:tells?|talks about|wants)\b/i, /\bhidden\b/i, /\bcheat[\s-]?code\b/i,
+          /\bunfair advantage\b/i, /\bloophole\b/i, /\b(one weird|simple|little) (?:trick|hack)\b/i,
+          /\bthe (?:one|only) (?:thing|method|trick|system)\b/i, /\bwhat the \w+ (?:don'?t|won'?t) tell you\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Hype superlatives", points: 9, cap: 3,
+        why: "Words doing the work that evidence should. 'Insane,' 'game-changer,' 'exploded.'",
+        patterns: [
+          /\bchange (?:your )?life\b/i, /\bgame[\s-]?chang\w+\b/i, /\brevolutionar\w+\b/i,
+          /\b(insane|crazy|wild|nuts|unbelievable)\b/i, /\b(blew up|exploded|going (?:viral|nuclear)|on fire)\b/i,
+          /\bnext[\s-]?level\b/i, /\bmind[\s-]?blow\w+\b/i, /\bguarantee(d|s)?\b/i, /\b100%\b/i,
+          /\b(?:literally )?print(?:ing)? money\b/i, /\bbreak(?:s|ing)? the (?:internet|algorithm)\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Too-good-to-be-true speed", points: 12, cap: 2,
+        why: "Overnight, in minutes, in 7 days — when paired with money, the timeline is the bait.",
+        patterns: [
+          /\bovernight\b/i, /\bin (?:just )?\d+\s?(?:minutes?|mins?|hours?|hrs?|days?)\b/i,
+          /\bin (?:minutes|seconds|an hour|a day|a week|a weekend)\b/i, /\binstant(?:ly)?\b/i,
+          /\bquick(?:est)? (?:money|cash|win|buck)\b/i, /\bfast(?:est)? (?:money|cash|way to)\b/i,
+          /\bstart(?:ed|ing)? (?:earning|making) (?:today|now)\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Free-with-a-catch / email grab", points: 13, cap: 2,
+        why: "'100% free — just drop your email.' You're not the customer, you're the lead.",
+        patterns: [
+          /\b(100%|completely|totally) free\b/i, /\bfree (?:for a )?(?:limited time|access|today|now)\b/i,
+          /\b(?:just |simply )?(?:drop|enter|leave) your email\b/i, /\bemail (?:in the )?(?:description|bio|pinned|below)\b/i,
+          /\blink in (?:the )?(?:bio|description|comments?)\b/i, /\bno (?:credit card|cc) (?:required|needed)\b/i,
+          /\b(?:dm|comment) (?:me )?["']?\w+["']?\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Authority name-drop", points: 8, cap: 2,
+        why: "Borrowing credibility — 'worked with MrBeast,' 'as seen on.' Proximity isn't proof.",
+        patterns: [
+          /\bworked with\b/i, /\bas seen (?:on|in)\b/i, /\bfeatured (?:on|in)\b/i,
+          /\b(?:mr\s?beast|mrbeast|grant cardone|iman gadzhi|tai lopez|alex hormozi)\b/i,
+          /\bmillionaire (?:mentor|friend|secret)\b/i, /\bself[\s-]?made\b/i, /\btop \d+%? (?:creator|earner|trader)\b/i
+        ]
+      },
+
+      // ---------------- GREEN: signs of a straight shooter ----------------
+      {
+        kind: "green", name: "Admits cost, effort or time", points: 14, cap: 2,
+        why: "Naming the real price — money spent, hours sunk — is what hype never does.",
+        patterns: [
+          /\bit cost me\b/i, /\bspent\s+\$?\d/i, /\b\d+\s?(?:hours?|hrs?|weeks?|months?)\s+of (?:work|my time|effort)\b/i,
+          /\b(?:took|takes) (?:a lot of |real |serious )?(?:work|time|effort)\b/i, /\btime[\s-]?consuming\b/i,
+          /\blost (?:me )?\$?\d/i, /\blost money\b/i, /\bout of pocket\b/i, /\bnet(?:ted)? (?:me )?\$?\d/i
+        ]
+      },
+      {
+        kind: "green", name: "Honest hedging / caveats", points: 11, cap: 3,
+        why: "'The catch is…', 'it didn't work', 'your results will differ.' Honesty leaves room for doubt.",
+        patterns: [
+          /\bthe catch\b/i, /\b(?:the )?(?:down|drawback|downside)\b/i, /\bdidn'?t work\b/i, /\bit failed\b/i,
+          /\bdoesn'?t (?:always )?work\b/i, /\bwon'?t work for everyone\b/i, /\bresults (?:may|will) (?:vary|differ)\b/i,
+          /\bhonestly\b/i, /\bto be fair\b/i, /\bit depends\b/i, /\bno guarantee\b/i, /\bharder than (?:it|expected)\b/i,
+          /\bbarely (?:made|broke)\b/i, /\bworks?,? but\b/i
+        ]
+      },
+      {
+        kind: "green", name: "Real numbers in context", points: 9, cap: 2,
+        why: "Receipts framed as outcomes, not promises — 'made $4 back on $50 spent.'",
+        patterns: [
+          /\bmade \$?\d[\d,.]*\s+(?:back|total|in revenue|profit|so far)\b/i,
+          /\b\$?\d[\d,.]*\s+(?:in|out|profit|loss|revenue|net)\b/i,
+          /\b\d+\s+(?:views?|subscribers?|sales?|signups?|clicks?)\b/i,
+          /\bbreak(?:ing)?[\s-]?even\b/i, /\breturn on\b/i
+        ]
+      }
+    ];
+
+    /* ---------------- Examples (click to load) ---------------- */
+    const EXAMPLES = [
+      { label: "🔥 A classic guru pitch", text: "Make $10,000/month with AI on complete autopilot — no skills, no experience needed. The secret the gurus don't want you to know. Free for a limited time, just drop your email before it's gone!" },
+      { label: "🐱 An honest test writeup", text: "I tried the faceless YouTube method for 30 days. It cost me $50 and about 12 hours of work, and I made $4 back so far. Honestly, it works, but the time sink is brutal and your results will vary." },
+      { label: "📺 A viral video title", text: "I Built a $5,000/Month App in 60 Minutes With AI and Zero Coding — This Will Change Your Life" },
+      { label: "🛠️ Tool landing-page copy", text: "The AI tool that does all the work for you. Generate viral content on autopilot while you sleep. 100% free access closing soon — grab it now!" }
+    ];
+
+    /* ============================================================
+       SCORING ENGINE
+       ============================================================ */
+    function analyze(text) {
+      const red = [], green = [];
+      let rawRed = 0, rawGreen = 0;
+
+      for (const rule of RULES) {
+        const hits = new Set();
+        for (const re of rule.patterns) {
+          const m = text.match(new RegExp(re.source, re.flags.includes("g") ? re.flags : re.flags + "g"));
+          if (m) m.forEach(h => hits.add(h.trim()));
+        }
+        if (hits.size === 0) continue;
+        const counted = Math.min(hits.size, rule.cap);
+        const contribution = counted * rule.points;
+        const entry = { name: rule.name, why: rule.why, hits: [...hits].slice(0, 6), points: contribution };
+        if (rule.kind === "red") { red.push(entry); rawRed += contribution; }
+        else { green.push(entry); rawGreen += contribution; }
+      }
+
+      // Net the honesty signals against the hype, then clamp 0–100.
+      let score = Math.round(rawRed - rawGreen * 0.85);
+      score = Math.max(0, Math.min(100, score));
+
+      // Sort biggest contributors first — the strongest receipts on top.
+      red.sort((a, b) => b.points - a.points);
+      green.sort((a, b) => b.points - a.points);
+      return { score, red, green };
+    }
+
+    /* ---- Verdict bands, in StratCat voice ---- */
+    function verdict(score) {
+      if (score >= 70) return {
+        label: "Reeks of BS", color: "var(--neg)",
+        say: "Hard pass energy. This is a sales pitch wearing a value costume — almost every line is doing persuasion, not proof. If money's involved, assume the person selling it is the one getting paid."
+      };
+      if (score >= 45) return {
+        label: "Heavy hype", color: "var(--warn)",
+        say: "There might be a real idea buried in here, but it's drowning in hype. Don't spend a dollar or an hour on it until someone shows you the actual numbers. Demand the receipts."
+      };
+      if (score >= 20) return {
+        label: "Mostly straight, verify", color: "var(--accent-2)",
+        say: "Not screaming scam, but it's still selling you something. A couple of tells are flashing. Worth a look — with your skeptic hat on and your wallet closed for now."
+      };
+      return {
+        label: "Smells clean", color: "var(--pos)",
+        say: "Reads like someone being straight with you — light on hype, not allergic to caveats. Low BS doesn't mean 'do it,' it means they're not manipulating you. Now go check whether the thing actually works."
+      };
+    }
+
+    /* ============================================================
+       UI WIRING
+       ============================================================ */
+    const elClaim = document.getElementById("claim");
+    const elResults = document.getElementById("results");
+    const elArc = document.getElementById("gaugeArc");
+    const ARC_LEN = 245; // length of the semicircle path
+
+    function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+    function renderFlags(listEl, countEl, flags, kind, emptyMsg) {
+      countEl.textContent = flags.length ? `${flags.length} found` : "";
+      if (!flags.length) { listEl.innerHTML = `<div class="empty-note">${emptyMsg}</div>`; return; }
+      listEl.innerHTML = flags.map(f => `
+        <div class="flag ${kind}">
+          <div class="flag-name">${esc(f.name)} <span style="color:var(--muted);font-weight:500;font-size:.85rem;">${kind === 'red' ? '+' : '−'}${f.points}</span></div>
+          <div class="flag-why">${esc(f.why)}</div>
+          <div class="flag-hit">${f.hits.map(h => `<span>${esc(h)}</span>`).join("")}</div>
+        </div>`).join("");
+    }
+
+    function run() {
+      const text = elClaim.value.trim();
+      if (!text) { elClaim.focus(); return; }
+
+      const { score, red, green } = analyze(text);
+      const v = verdict(score);
+
+      // Gauge + number
+      const badge = document.getElementById("verdictBadge");
+      badge.textContent = v.label;
+      badge.style.background = v.color;
+      document.getElementById("catSay").textContent = v.say;
+      elArc.style.stroke = v.color;
+
+      renderFlags(document.getElementById("redList"), document.getElementById("redCount"), red, "red",
+        "No obvious hype language fired. That's a good sign — but read it yourself, clean copy can still hide an empty promise.");
+      renderFlags(document.getElementById("greenList"), document.getElementById("greenCount"), green, "green",
+        "No honesty signals detected — no admitted costs, caveats, or real numbers. Pitches that only show upside are hiding the downside.");
+
+      elResults.classList.add("show");
+
+      // Animate the needle + count up
+      requestAnimationFrame(() => { elArc.style.transition = "stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1), stroke .3s"; elArc.style.strokeDashoffset = ARC_LEN - (score / 100) * ARC_LEN; });
+      const numEl = document.getElementById("scoreNum");
+      let cur = 0; const step = Math.max(1, Math.round(score / 28));
+      clearInterval(window.__bsTick);
+      window.__bsTick = setInterval(() => {
+        cur += step; if (cur >= score) { cur = score; clearInterval(window.__bsTick); }
+        numEl.textContent = cur;
+      }, 28);
+
+      elResults.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    document.getElementById("runBtn").addEventListener("click", run);
+    elClaim.addEventListener("keydown", e => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") run(); });
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      elClaim.value = ""; elResults.classList.remove("show"); elClaim.focus();
+    });
+
+    // Example chips
+    const chipsEl = document.getElementById("chips");
+    chipsEl.innerHTML = EXAMPLES.map((ex, i) => `<button class="chip" data-i="${i}">${ex.label}</button>`).join("");
+    chipsEl.addEventListener("click", e => {
+      const btn = e.target.closest(".chip"); if (!btn) return;
+      elClaim.value = EXAMPLES[+btn.dataset.i].text; run();
+    });
+
+    /* ---------- Footer / links ---------- */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* ---------- Email signup (same beehiiv handoff as the main site) ---------- */
+    const form = document.getElementById("signupForm");
+    const fmsg = document.getElementById("formMsg");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        fmsg.textContent = "That email doesn't look right — give it another shot."; fmsg.className = "form-msg err"; return;
+      }
+      fmsg.textContent = "Taking you to confirm your spot…"; fmsg.className = "form-msg ok";
+      window.location.href = CONFIG.beehiivSubscribeUrl + "?email=" + encodeURIComponent(email);
+    });
+  </script>
+</body>
+</html>
