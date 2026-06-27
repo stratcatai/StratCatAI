@@ -188,6 +188,23 @@
     }
     .disclaimer b { color: var(--text); font-weight: 600; }
 
+    /* ---------- "Now go get the receipts" checklist ---------- */
+    .checklist { margin-top: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+    .checklist h3 { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+    .checklist-sub { color: var(--muted); font-size: 0.92rem; margin: 8px 0 16px; }
+    .checklist-sub em, .check-grid em { color: var(--text); font-style: normal; font-weight: 600; }
+    .check-grid { list-style: none; counter-reset: chk; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; padding: 0; margin: 0; }
+    @media (max-width: 620px) { .check-grid { grid-template-columns: 1fr; } }
+    .check-grid li { counter-increment: chk; position: relative; padding-left: 34px; font-size: 0.92rem; color: var(--muted); }
+    .check-grid li b { color: var(--text); font-weight: 600; }
+    .check-grid li::before {
+      content: counter(chk); position: absolute; left: 0; top: 1px; width: 22px; height: 22px;
+      display: grid; place-items: center; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 0.85rem;
+      color: #1a1310; background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-radius: 6px;
+    }
+    .checklist-foot { margin-top: 16px; font-size: 0.9rem; color: var(--muted); }
+    .checklist-foot a { color: var(--accent); font-weight: 600; }
+
     /* ---------- Subscribe CTA ---------- */
     .cta-band { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: clamp(40px, 6vw, 64px) 0; }
     .cta-band h2 { font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800; }
@@ -301,6 +318,23 @@
                 <h3>✅ Honesty signals <span class="count" id="greenCount"></span></h3>
                 <div class="flag-list" id="greenList"></div>
               </div>
+            </div>
+
+            <!-- ---------- The receipts checklist: questions the Radar can't answer for you ---------- -->
+            <div class="checklist">
+              <h3>🧾 Now go get the receipts</h3>
+              <p class="checklist-sub">The Radar only smells the <em>hype</em>. It can't tell you whether the <em>method</em> actually pays in today's market — that part's on you. Before you risk a dollar or an hour, get honest answers to these:</p>
+              <ol class="check-grid">
+                <li><b>Market saturation.</b> How crowded is this <em>exact</em> method right now? Is everyone already doing it?</li>
+                <li><b>Real execution difficulty.</b> The skills, tools, and boring hidden work it actually takes — not what the guru claims.</li>
+                <li><b>Platform risk.</b> How likely is OpenAI / Google / Meta / TikTok to kill or nerf this in the next 6 months?</li>
+                <li><b>Time to first dollar.</b> Honest timeline for a normal solo person — not the highlight reel.</li>
+                <li><b>Capital required.</b> Real money upfront: ads, tools, accounts, subscriptions.</li>
+                <li><b>Proof vs. hype.</b> Independent proof it works — or just screenshots from people selling it?</li>
+                <li><b>Sustainability.</b> Does it compound, or die the second everyone copies it?</li>
+                <li><b>Your edge.</b> What do <em>you</em> bring that makes this work where most people quit?</li>
+              </ol>
+              <p class="checklist-foot">That's the checklist I run before I risk my own time and money on a test. <a href="https://www.youtube.com/@stratcatai" target="_blank" rel="noopener">Watch me actually do it →</a></p>
             </div>
 
             <div class="disclaimer">
@@ -516,7 +550,9 @@
       { label: "🔥 A classic guru pitch", text: "Make $10,000/month with AI on complete autopilot — no skills, no experience needed. The secret the gurus don't want you to know. Free for a limited time, just drop your email before it's gone!" },
       { label: "🐱 An honest test writeup", text: "I tried the faceless YouTube method for 30 days. It cost me $50 and about 12 hours of work, and I made $4 back so far. Honestly, it works, but the time sink is brutal and your results will vary." },
       { label: "📺 A viral video title", text: "I Built a $5,000/Month App in 60 Minutes With AI and Zero Coding — This Will Change Your Life" },
-      { label: "🛠️ Tool landing-page copy", text: "The AI tool that does all the work for you. Generate viral content on autopilot while you sleep. 100% free access closing soon — grab it now!" }
+      { label: "🛠️ Tool landing-page copy", text: "The AI tool that does all the work for you. Generate viral content on autopilot while you sleep. 100% free access closing soon — grab it now!" },
+      { label: "🎓 A coaching/course pitch", text: "Tired of your 9-to-5? My AI Cashflow Blueprint shows you how to hit financial freedom on autopilot. Join my program — limited seats. Book a free call and DM me 'FREEDOM' to enroll." },
+      { label: "🤖 An AI-tool hustle", text: "Let ChatGPT build your business while you sleep. This AI-powered money machine does all the work — just copy my prompt and watch it print money with AI. No skills needed, guaranteed." }
     ];
 
     /* ============================================================
