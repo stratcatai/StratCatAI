@@ -167,6 +167,13 @@
     .coming-soon h3 { font-family: 'Barlow Condensed'; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; }
     .coming-soon p { color: var(--muted); max-width: 50ch; margin: 12px auto 22px; }
 
+    /* ---------- Free tool card (BS Radar) ---------- */
+    .tool-card { text-align: center; max-width: 680px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(36px, 6vw, 56px) clamp(24px, 5vw, 48px); }
+    .tool-card .eyebrow { margin-bottom: 18px; }
+    .tool-card h2 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 800; }
+    .tool-card h2 .accent { color: var(--accent); }
+    .tool-card p { margin: 14px auto 26px; color: var(--muted); max-width: 52ch; font-size: 1.05rem; }
+
     .center-cta { text-align: center; margin-top: 44px; }
     .btn-outline {
       display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; font-weight: 700; font-size: 1rem;
@@ -288,6 +295,18 @@
         </div>
       </div>
     </section>
+
+    <!-- ===================== FREE TOOL: BS RADAR ===================== -->
+    <section class="block" id="tools">
+      <div class="wrap">
+        <div class="tool-card">
+          <span class="eyebrow">Free tool · No signup</span>
+          <h2>Run a claim through the <span class="accent">BS Radar</span></h2>
+          <p>Paste any AI "make money" pitch, guru promise, or clickbait title. Get a 0–100 BS Score, an honest verdict, and the exact red flags that tripped it — instantly, free, no email required.</p>
+          <a class="btn-outline" href="bs-radar.html">Try the BS Radar →</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ===================== FOOTER ===================== -->
@@ -295,6 +314,7 @@
     <div class="wrap foot">
       <p>© <span id="year"></span> StratCat AI · I test AI money ideas so you don't have to. — StratCat 🐱</p>
       <div class="foot-links">
+        <a href="bs-radar.html">BS Radar</a>
         <a id="footYouTube" href="#" target="_blank" rel="noopener">YouTube</a>
         <a href="#top">Back to top ↑</a>
       </div>
