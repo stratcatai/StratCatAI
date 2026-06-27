@@ -441,6 +441,43 @@
           /\bmillionaire (?:mentor|friend|secret)\b/i, /\bself[\s-]?made\b/i, /\btop \d+%? (?:creator|earner|trader)\b/i
         ]
       },
+      {
+        kind: "red", name: "Quit-the-job / lifestyle bait", points: 12, cap: 2,
+        why: "Selling a lifestyle, not a method. 'Fire your boss' and 'laptop life' are the dream being marketed — not evidence it pays.",
+        patterns: [
+          /\bfire your boss\b/i, /\bquit (?:your )?(?:job|day job|9[\s-]?to[\s-]?5|nine[\s-]?to[\s-]?five)\b/i,
+          /\b9[\s-]?to[\s-]?5\b/i, /\bfinancial freedom\b/i, /\b(?:laptop|dream|passive|freedom) lifestyle\b/i,
+          /\bwork from (?:anywhere|the beach|your phone)\b/i, /\bbe your own boss\b/i,
+          /\b(?:escape|beat|quit) the rat race\b/i, /\bretire (?:early|young|by \d+|at \d+)\b/i,
+          /\bnever work again\b/i, /\b(?:laptop|beach) (?:lifestyle|life)\b/i,
+          /\bmake money (?:in your sleep|from your phone|from the couch)\b/i
+        ]
+      },
+      {
+        kind: "red", name: "Course / coaching upsell", points: 14, cap: 2,
+        why: "The actual product. When a 'method' ends in 'join my program,' the person selling it is usually the one getting paid.",
+        patterns: [
+          /\b(?:my|the|our) (?:course|program|masterclass|bootcamp|mentorship|coaching|academy)\b/i,
+          /\b(?:my|our) (?:blueprint|system|formula|method|framework|playbook|roadmap)\b/i,
+          /\b(?:free )?(?:training|webinar|workshop|masterclass)\b/i,
+          /\benroll\b/i, /\bsign up (?:now|today|for the)\b/i, /\bapply (?:now|today|here|to join)\b/i,
+          /\bdm me\b/i, /\b(?:send|shoot) me a (?:dm|message)\b/i,
+          /\bjoin (?:my|our|the) (?:course|program|community|challenge|waitlist|academy|mentorship)\b/i,
+          /\bjoin \d[\d,]*\+?\b/i, /\bbook a (?:free )?call\b/i, /\blimited (?:enrollment|seats)\b/i
+        ]
+      },
+      {
+        kind: "red", name: "AI magic / buzzword bait", points: 11, cap: 2,
+        why: "AI as a magic wand. Slapping 'AI-powered' on a promise doesn't make the money real — it's the new 'one weird trick.'",
+        patterns: [
+          /\bAI[\s-]?powered\b/i,
+          /\bai (?:tool|app|bot|agent|software|system|machine)s? (?:that|does?|makes?|builds?|generates?|runs?|earns?)\b/i,
+          /\b(?:let|have|make|just) (?:ai|chatgpt|the bot|the ai) (?:do|make|build|run|generate|write|handle)\b/i,
+          /\bfully autonomous\b/i, /\b(?:ai|chatgpt|automation) (?:goldmine|gold mine|money machine|cash machine|empire|gold rush)\b/i,
+          /\bprint(?:ing)? money with ai\b/i, /\bcopy[\s-]?(?:and[\s-]?)?paste (?:this |my )?prompt\b/i,
+          /\bjust (?:copy|use) (?:this|my) prompt\b/i, /\bai (?:writes|builds|runs|does) (?:it )?(?:all|everything)\b/i
+        ]
+      },
 
       // ---------------- GREEN: signs of a straight shooter ----------------
       {
