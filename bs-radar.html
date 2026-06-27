@@ -164,6 +164,17 @@
     .verdict-say { margin-top: 14px; font-size: 1.06rem; color: var(--text); }
     .verdict-say .cat { color: var(--accent); font-weight: 600; }
 
+    /* ---------- "Looks like" scheme callout ---------- */
+    .scheme-callout {
+      display: none; margin-top: 16px; background: var(--surface);
+      border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: 12px; padding: 14px 16px;
+    }
+    .scheme-callout.show { display: block; }
+    .scheme-callout .sc-name { font-family: 'Barlow Condensed'; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; color: var(--accent); font-size: 1.05rem; }
+    .scheme-callout .sc-tell { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
+    .scheme-callout .sc-sep { height: 12px; }
+
     .breakdown { margin-top: 22px; display: grid; gap: 22px; grid-template-columns: 1fr 1fr; }
     @media (max-width: 720px) { .breakdown { grid-template-columns: 1fr; } }
     .panel h3 { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
@@ -308,6 +319,8 @@
                 <p class="verdict-say"><span class="cat">🐱 The cat says:</span> <span id="catSay"></span></p>
               </div>
             </div>
+
+            <div class="scheme-callout" id="schemeCallout"></div>
 
             <div class="breakdown">
               <div class="panel">
@@ -545,6 +558,71 @@
       }
     ];
 
+    /* ============================================================
+       SCHEMES — name the specific guru "play" a claim looks like.
+       Purely informational: does NOT change the BS score. It tells
+       the user which AI-money method they're looking at, plus the
+       honest reality gurus skip. Tune patterns/tells freely.
+       ============================================================ */
+    const SCHEMES = [
+      {
+        name: "The faceless YouTube play",
+        patterns: [/\bfaceless\b/i, /\bcash[\s-]?cow channel/i, /\byoutube automation\b/i, /\bautomated (?:youtube )?channel\b/i, /\bAI[\s-]?narrated\b/i, /\bvoiceover (?:videos?|channel)\b/i],
+        tell: "Real channels exist — but 'automation' usually means months of unpaid grind, $0 until you're monetized, and a graveyard of dead channels for every one that pops."
+      },
+      {
+        name: "The AI automation agency play",
+        patterns: [/\bAI (?:automation )?agency\b/i, /\bautomation agency\b/i, /\bn8n\b/i, /\bmake\.com\b/i, /\bbuild(?:ing)? (?:AI )?(?:agents?|automations?) for (?:businesses|clients|companies|locals?)\b/i, /\bcold (?:outreach|email|dm)\b/i],
+        tell: "The money's real for a few closers — but it's cold-outreach sales work, not passive. And the course about starting an agency usually outsells the agency."
+      },
+      {
+        name: "The prompt-pack play",
+        patterns: [/\bprompt pack/i, /\bsell(?:ing)? prompts?\b/i, /\bmega[\s-]?prompt/i, /\bprompt (?:library|bundle|vault)\b/i, /\b\d{2,}[\s,]*\+?\s*prompts?\b/i],
+        tell: "Selling prompts is selling water by the river — buyers can get the same from the chatbot for free. Most of the revenue is creators selling to other creators."
+      },
+      {
+        name: "The autonomous-agent play",
+        patterns: [/\bAI agents?\b/i, /\bautonomous agents?\b/i, /\bagent swarm/i, /\bagents? that (?:make|earn|trade|sell|run)\b/i],
+        tell: "'Set up an agent that prints money' — in reality they're brittle, need constant babysitting, and the demo always performs better than your bank account."
+      },
+      {
+        name: "The AI print-on-demand play",
+        patterns: [/\bprint[\s-]?on[\s-]?demand\b/i, /\bAI (?:t[\s-]?shirts?|merch|designs?)\b/i, /\bmerch by amazon\b/i, /\bredbubble\b/i, /\b(?:etsy|teespring)\b/i],
+        tell: "Saturated to the gills, razor-thin margins, and the platform can suspend you on a whim. A handful win; most clear lunch money."
+      },
+      {
+        name: "The AI dropshipping play",
+        patterns: [/\bdropship/i, /\bshopify store\b/i, /\bwinning product\b/i, /\bAI (?:store|product research)\b/i],
+        tell: "Ad spend eats you alive before a 'winning product' ever shows up — and AI doesn't fix the part where most people quit at a loss."
+      },
+      {
+        name: "The AI trading-bot play",
+        patterns: [/\b(?:AI )?trading bot\b/i, /\bAI trading\b/i, /\bcrypto bot\b/i, /\b(?:trading|crypto) signals\b/i, /\bforex\b/i, /\bauto[\s-]?trad/i],
+        tell: "If a bot reliably printed money, nobody would sell it to you for $97. The edge being sold is the upsell, not the alpha."
+      },
+      {
+        name: "The digital-products play",
+        patterns: [/\bdigital products?\b/i, /\bnotion templates?\b/i, /\b(?:sell|write) an? ebook\b/i, /\bAI ebook\b/i, /\bonline course\b/i, /\bsell(?:ing)? (?:templates|courses)\b/i],
+        tell: "Genuinely real — but it's a content-marketing grind. You're building an audience first, and 'passive income' hides a year of unpaid posting."
+      },
+      {
+        name: "The AI UGC play",
+        patterns: [/\bUGC\b/, /\bAI (?:avatars?|influencers?|spokes)/i, /\btiktok shop\b/i, /\bfaceless tiktok\b/i, /\bAI (?:actor|creator)s?\b/i],
+        tell: "Brands do pay — but it's gig work with clients and revisions, not autopilot. And AI avatars are increasingly throttled and label-flagged."
+      }
+    ];
+
+    function detectSchemes(text) {
+      const found = [];
+      for (const s of SCHEMES) {
+        let hits = 0;
+        for (const re of s.patterns) { if (re.test(text)) hits++; }
+        if (hits) found.push({ name: s.name, tell: s.tell, hits });
+      }
+      found.sort((a, b) => b.hits - a.hits);
+      return found;
+    }
+
     /* ---------------- Examples (click to load) ---------------- */
     const EXAMPLES = [
       { label: "🔥 A classic guru pitch", text: "Make $10,000/month with AI on complete autopilot — no skills, no experience needed. The secret the gurus don't want you to know. Free for a limited time, just drop your email before it's gone!" },
@@ -583,7 +661,8 @@
       // Sort biggest contributors first — the strongest receipts on top.
       red.sort((a, b) => b.points - a.points);
       green.sort((a, b) => b.points - a.points);
-      return { score, red, green };
+      const schemes = detectSchemes(text);
+      return { score, red, green, schemes };
     }
 
     /* ---- Verdict bands, in StratCat voice ---- */
@@ -631,15 +710,28 @@
       const text = elClaim.value.trim();
       if (!text) { elClaim.focus(); return; }
 
-      const { score, red, green } = analyze(text);
+      const { score, red, green, schemes } = analyze(text);
       const v = verdict(score);
 
       // Gauge + number
       const badge = document.getElementById("verdictBadge");
-      badge.textContent = v.label;
+      const vEmoji = score >= 70 ? "🚩" : score >= 45 ? "⚠️" : score >= 20 ? "🤔" : "✅";
+      badge.textContent = vEmoji + " " + v.label;
       badge.style.background = v.color;
       document.getElementById("catSay").textContent = v.say;
       elArc.style.stroke = v.color;
+
+      // "Looks like" scheme callout — informational, doesn't affect the score
+      const sc = document.getElementById("schemeCallout");
+      if (schemes.length) {
+        sc.innerHTML = schemes.slice(0, 2).map(s =>
+          `<div class="sc-name">🎯 Looks like: ${esc(s.name)}</div><div class="sc-tell">${esc(s.tell)}</div>`
+        ).join('<div class="sc-sep"></div>');
+        sc.classList.add("show");
+      } else {
+        sc.classList.remove("show");
+        sc.innerHTML = "";
+      }
 
       renderFlags(document.getElementById("redList"), document.getElementById("redCount"), red, "red",
         "No obvious hype language fired. That's a good sign — but read it yourself, clean copy can still hide an empty promise.");
