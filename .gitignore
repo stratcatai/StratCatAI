@@ -4,3 +4,15 @@ private/
 *.log
 .DS_Store
 Thumbs.db
+
+# Working image files / raw exports not used by the site.
+# These live locally but shouldn't ship to the public repo.
+# If one becomes a real site asset, give it a clean name and `git add -f` it.
+images/1778585926519.png
+images/Black White Overlay Paper Border.png
+images/ChatGPT Image *.png
+images/Circular frame with glowing orange neon*.png
+images/Video #*.png
+images/real test.png
+images/stratcat border.png
+images/i made zero dollars.png
