@@ -63,10 +63,9 @@
       background: rgba(20,17,15,0.82); backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
-    .nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; column-gap: 12px; }
-    .brand { grid-column: 2; display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed'; font-weight: 800; font-size: clamp(0.85rem, 4.2vw, 1.5rem); text-transform: uppercase; letter-spacing: 0.02em; justify-self: center; white-space: nowrap; }
-    .nav-cta { grid-column: 3; justify-self: end; flex-wrap: nowrap; min-width: max-content; }
-    .brand .mark { flex-shrink: 0; display: inline-grid; place-items: center; width: 40px; height: 40px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.02em; }
+    .brand .mark { display: inline-grid; place-items: center; width: 40px; height: 40px; }
     .brand .mark img { width: 100%; height: 100%; display: block; border-radius: 9px; object-fit: cover; }
     .brand .accent { color: var(--accent); }
     .nav-cta {
@@ -89,9 +88,10 @@
       text-transform: uppercase; color: var(--accent-2);
       border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; margin-bottom: 20px;
     }
-    .hero h1 { font-size: clamp(2.4rem, 6.5vw, 4.4rem); font-weight: 800; max-width: 16ch; }
+    .hero .wrap { text-align: center; }
+    .hero h1 { font-size: clamp(3.2rem, 10vw, 6rem); font-weight: 800; line-height: 0.95; }
     .hero h1 .accent { color: var(--accent); }
-    .hero p.lede { margin-top: 18px; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); max-width: 56ch; }
+    .hero p.lede { margin: 18px auto 0; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); max-width: 56ch; }
 
     /* ---------- Tool ---------- */
     .tool { padding: clamp(28px, 4vw, 40px) 0 clamp(48px, 7vw, 80px); }
