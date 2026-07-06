@@ -42,6 +42,6 @@ _First run: 2026-07-06 — all 12 videos + channel shell audited._
 | pezzS1e00bA | 1000 Subs in 30 Days? | 2026-07-06 | OPEN | Added #Shorts. OPEN only for the shared 30-day-test link standardization. |
 
 ### Channel-level items (not per-video — still needing Strat's call)
-- **Banner** reads "StratCat AI" (spaced) → needs a new one-word graphic (tagline fine). Upload manually.
+- **Banner** — corrected one-word "StratCatAI" graphic made (2026-07-06). Once uploaded to the channel, this is resolved — Scout should verify the live banner shows one word, not re-flag it as missing.
 - **Channel Links** section has only the beehiiv newsletter → consider adding main site, one-pager, BS Radar, Magic Picker.
 - **"Delete Brain Fog"** (5INcRpmJabQ) → strongest recommendation to rewrite or unlist.
