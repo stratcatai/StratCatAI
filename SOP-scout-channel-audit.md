@@ -7,6 +7,9 @@ what to fix on his own, and what to leave for Strat to decide.
 **Run it by:** opening YouTube Studio in Chrome, then telling Scout: *"Run the
 Channel Audit SOP."* Scout works top to bottom and ends with two lists (see Output).
 
+**Before auditing, Scout loads his memory (the Audit Ledger) so he only works the
+new stuff — see Section 7.** This keeps the weekly run fast as the channel grows.
+
 ---
 
 ## 0. Prime directive
@@ -110,7 +113,7 @@ For each video:
 
 ## 6. Output (how Scout reports back)
 
-End every audit with exactly two lists:
+End every audit with exactly **three** things:
 
 **1. Changes Made** — the full Change Log (before → after, where, why).
 
@@ -119,5 +122,44 @@ or strategy decision (title rewrites on performing videos, thumbnail swaps, tone
 calls, missing operator arc at the channel level, etc.), each with a one-line
 recommendation.
 
-Keep both lists tight and skimmable. Strat should be able to read the whole thing
+**3. Updated Audit Ledger** — the full ledger table (Section 7) as a copy-paste
+block, with this run's results merged in. Claude Code saves this back to the repo.
+
+Keep all three tight and skimmable. Strat should be able to read the whole thing
 in one pass and either nod or make the few calls that are actually his.
+
+---
+
+## 7. The Audit Ledger — Scout's memory (so he doesn't re-audit everything)
+
+Scout keeps a persistent record of every video he has already cleared, so each
+weekly run only touches what's actually new or unresolved.
+
+**Ledger location (public raw URL — Scout reads it the same way he reads this SOP):**
+`https://raw.githubusercontent.com/stratcatai/StratCatAI/main/SCOUT-audit-ledger.md`
+
+### At the START of every run:
+1. Read the ledger from the URL above.
+2. Pull the current video list from YouTube Studio (titles + video IDs — the list
+   view is enough; no need to open each video yet).
+3. Decide what to audit. **Only audit a video if:**
+   - it is **not in the ledger** (a new upload), **or**
+   - its **title has changed** vs. the ledger, **or**
+   - its ledger status is **OPEN** (something was still unresolved last time).
+4. Every video that is **CLEAN in the ledger with an unchanged title is SKIPPED** —
+   log it once as *"skipped, unchanged"* and move on. Do not open it.
+
+### At the END of every run:
+Emit the **Updated Audit Ledger** (part 3 of the Output). For each video, a row:
+
+> `| Video ID | Title | Last audited (this run's date) | CLEAN or OPEN | Notes |`
+
+- Videos audited this run → new/updated row with today's date.
+- Videos skipped this run → keep their existing row unchanged.
+- Mark a row **OPEN** if anything is still unresolved (dead link you couldn't fix,
+  a flag awaiting Strat's call, etc.) and say why in Notes; otherwise **CLEAN**.
+
+**Honest limitation:** the skip decision is based on the Studio list view (titles +
+IDs), so Scout reliably catches new videos and title changes. A silent edit to an
+*old video's description only* could be skipped — if Strat knows he edited one, he
+tells Scout to force-recheck it that run.
