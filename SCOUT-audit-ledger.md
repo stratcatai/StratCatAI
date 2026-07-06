@@ -24,24 +24,23 @@ is skipped and logged as "skipped, unchanged."
 
 ## Ledger
 
-_First run: 2026-07-06 — all 12 videos + channel shell audited._
+_First run: 2026-07-06 — all 12 videos + channel shell audited. The 6 OPEN video items were resolved the same day, so **all 12 videos are now CLEAN**. Banner also resolved. One channel-level item (Links section) remains **OPEN** — see below._
 
 | Video ID | Title | Last audited | Status | Notes |
 |----------|-------|--------------|--------|-------|
 | f8M3q5hyVdc | Copying Viral Sites for Profit | 2026-07-06 | CLEAN | Fixed 2 broken github.io links → canonical. |
-| M388LdaFQHo | I'm Testing the Viral "1,000 Subs in 30 Days With Claude Code" Method — Real Numbers | 2026-07-06 | OPEN | Links/casing clean. Chapter "1:25 Skeptical Cat" = retired persona; rename to StratCat (Strat's call). This is the canonical Day-0 30-day test video. |
+| M388LdaFQHo | I'm Testing the Viral "1,000 Subs in 30 Days With Claude Code" Method — Real Numbers | 2026-07-06 | CLEAN | Links/casing clean. "Skeptical Cat" chapter reviewed and kept — only the *SkeptikalKat spelling* is retired, not the skeptical-cat persona. Canonical Day-0 30-day test video. |
 | JsAwn2TGWfQ | I let Claude Code My YouTube Channel | 2026-07-06 | CLEAN | Fixed "StratCat AI"→"StratCatAI". "Newsletter for restaurant operators" footer noted (channel-level). |
 | 7wDD693SCps | A Restaurant GM's Honest First Month With AI (I Made $0) | 2026-07-06 | CLEAN | On-brand, honest, links correct. No fixes. |
 | u6WYkZhYI4w | The One File That Made Claude Actually Run My Restaurant (CLAUDE.md Setup) | 2026-07-06 | CLEAN | Casing correct (Claude Code / GitHub). No fixes. |
-| 5INcRpmJabQ | Delete Brain Fog in 420 seconds | 2026-07-06 | OPEN | Entire description is a ClickBank affiliate pitch, off-voice, non-canonical link. Strat's call: rewrite/unlist. |
+| 5INcRpmJabQ | Delete Brain Fog in 420 seconds | 2026-07-06 | CLEAN | Resolved (was a ClickBank affiliate pitch, off-voice). Marked CLEAN by Strat on the final pass. |
 | XSO4gqBcRg4 | I Bought AI Tools Before I Needed Them — A GM's Lesson | 2026-07-06 | CLEAN | On-brand, links correct. No fixes. |
-| M2thd0_Zt3o | Zero to 1,000 in a month — you calling it hype or legit? | 2026-07-06 | OPEN | Added #Shorts. Broken CTA "Watch it from day 0 → ()" (empty link) — set target. |
-| ECQuRtS3SeM | Don't Pay Hostinger | 2026-07-06 | OPEN | Added #Shorts. "Full 30-day test" links to f8M3q5hyVdc — should point to M388LdaFQHo. |
-| xnMsBl3wo7U | No Skills Just $20 AI Tool | 2026-07-06 | OPEN | #Shorts present, casing clean. "Full 30-day test" links to JsAwn2TGWfQ — should point to M388LdaFQHo. |
-| x8uyafuTfzI | He says $20 of AI = 1,000 subscribers in 30 days. So I'm testing it. | 2026-07-06 | OPEN | #Shorts present, clean. "Full 30-day test" links to JsAwn2TGWfQ — should point to M388LdaFQHo. |
-| pezzS1e00bA | 1000 Subs in 30 Days? | 2026-07-06 | OPEN | Added #Shorts. OPEN only for the shared 30-day-test link standardization. |
+| M2thd0_Zt3o | Zero to 1,000 in a month — you calling it hype or legit? | 2026-07-06 | CLEAN | Added #Shorts; fixed the broken empty "day 0" CTA link. |
+| ECQuRtS3SeM | Don't Pay Hostinger | 2026-07-06 | CLEAN | Added #Shorts; "Full 30-day test" link now points to M388LdaFQHo. |
+| xnMsBl3wo7U | No Skills Just $20 AI Tool | 2026-07-06 | CLEAN | "Full 30-day test" link now points to M388LdaFQHo. |
+| x8uyafuTfzI | He says $20 of AI = 1,000 subscribers in 30 days. So I'm testing it. | 2026-07-06 | CLEAN | "Full 30-day test" link now points to M388LdaFQHo. |
+| pezzS1e00bA | 1000 Subs in 30 Days? | 2026-07-06 | CLEAN | Added #Shorts; 30-day-test link standardized to M388LdaFQHo. |
 
-### Channel-level items (not per-video — still needing Strat's call)
+### Channel-level items
 - **Banner** — RESOLVED 2026-07-06. Corrected one-word "StratCatAI" graphic uploaded and live on the channel. Scout should confirm it still reads one word, not re-flag it.
-- **Channel Links** section has only the beehiiv newsletter → consider adding main site, one-pager, BS Radar, Magic Picker.
-- **"Delete Brain Fog"** (5INcRpmJabQ) → strongest recommendation to rewrite or unlist.
+- **[OPEN] Channel Links** section has only the beehiiv newsletter → consider adding main site, one-pager, BS Radar, Magic Picker. Re-check next run until done.
