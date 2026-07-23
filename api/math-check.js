@@ -1,8 +1,10 @@
 // BS Radar — Math Check backend.
 // Takes a specific AI-money claim, asks an LLM to pull out the concrete
 // number and check it against realistic benchmarks, returns a structured
-// verdict. Runs on xAI's grok-4-fast (cheap tier) — see brand-voice.md
-// "backend offer" section for the product decision behind this.
+// verdict. Runs on xAI's grok-build-0.1 (cheapest current xAI tier) — see
+// brand-voice.md "backend offer" section for the product decision behind this.
+
+export const config = { maxDuration: 15 }; // this call finishes in a few seconds; bounds worst-case hangs
 
 const XAI_URL = "https://api.x.ai/v1/chat/completions";
 const MODEL = "grok-build-0.1";
