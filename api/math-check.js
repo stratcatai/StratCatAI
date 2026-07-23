@@ -5,7 +5,7 @@
 // "backend offer" section for the product decision behind this.
 
 const XAI_URL = "https://api.x.ai/v1/chat/completions";
-const MODEL = "grok-4-fast";
+const MODEL = "grok-build-0.1";
 const MAX_CLAIM_LEN = 2000;
 
 const SYSTEM_PROMPT = `You are the math-check engine behind "BS Radar," a free tool on StratCatAI (a YouTube channel that tests AI money-making claims with honest numbers, no hype).
