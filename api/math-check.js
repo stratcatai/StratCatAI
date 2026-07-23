@@ -45,9 +45,8 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.XAI_API_KEY1 || process.env.xai_api_key1 || process.env.XAI_API_KEY;
   if (!apiKey) {
-    const seenKeys = Object.keys(process.env).filter(k => /xai/i.test(k));
     console.error("No xAI API key found in environment (checked XAI_API_KEY1, xai_api_key1, XAI_API_KEY).");
-    return res.status(500).json({ error: "Math-check isn't configured yet. Try again later.", debugSeenKeys: seenKeys, debugKeyLen: apiKey ? apiKey.length : 0 });
+    return res.status(500).json({ error: "Math-check isn't configured yet. Try again later." });
   }
 
   try {
