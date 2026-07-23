@@ -70,7 +70,7 @@ export default async function handler(req, res) {
     if (!upstream.ok) {
       const errText = await upstream.text();
       console.error("xAI API error:", upstream.status, errText);
-      return res.status(502).json({ error: "Math-check service is temporarily unavailable. Try again in a bit.", debugStatus: upstream.status, debugBody: errText });
+      return res.status(502).json({ error: "Math-check service is temporarily unavailable. Try again in a bit." });
     }
 
     const data = await upstream.json();
