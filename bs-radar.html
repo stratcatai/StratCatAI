@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BS Radar — Pressure-test any AI money claim · StratCat AI</title>
-  <meta name="description" content="Paste any AI 'make money' claim, guru pitch, or tool promise. BS Radar scores how much it reeks of hype — and shows you exactly which red flags fired. Free, no signup, runs in your browser." />
+  <meta name="description" content="Paste any AI 'make money' claim, guru pitch, or tool promise. BS Radar checks whether the number is realistic and scores how much the language reeks of hype. Free, no signup." />
 
   <!-- Open Graph / social preview -->
   <meta property="og:title" content="BS Radar — Pressure-test any AI money claim" />
@@ -75,12 +75,20 @@
     }
     .nav-cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-    /* ---------- Hero ---------- */
+    /* ---------- Hero ----------
+       Blue + orange as two competing forces (matching the real YouTube
+       banner split — see brand-voice.md visual identity, corrected 2026-07-23),
+       not orange-dominant with blue as a hint. */
+    :root {
+      --blue: #2f9bff;
+      --blue-glow: #7fc4ff;
+    }
     .hero {
-      position: relative; padding: clamp(40px, 6vw, 72px) 0 clamp(20px, 3vw, 32px);
+      position: relative; padding: clamp(48px, 7vw, 88px) 0 clamp(28px, 4vw, 40px);
       background:
-        radial-gradient(1200px 500px at 75% -10%, rgba(255,107,44,0.18), transparent 60%),
-        radial-gradient(900px 500px at 0% 10%, rgba(255,179,71,0.08), transparent 55%);
+        radial-gradient(1100px 550px at 88% -12%, rgba(255,107,44,0.24), transparent 60%),
+        radial-gradient(1100px 550px at 8% -8%, rgba(47,155,255,0.22), transparent 58%),
+        radial-gradient(900px 500px at 50% 115%, rgba(255,179,71,0.06), transparent 55%);
       overflow: hidden;
     }
     .eyebrow {
@@ -88,10 +96,36 @@
       text-transform: uppercase; color: var(--accent-2);
       border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; margin-bottom: 20px;
     }
-    .hero .wrap { text-align: center; }
+    .hero .wrap { text-align: center; position: relative; z-index: 1; }
     .hero h1 { font-size: clamp(3.2rem, 10vw, 6rem); font-weight: 800; line-height: 0.95; }
     .hero h1 .accent { color: var(--accent); }
+    .hero h1 .accent-blue { color: var(--blue); }
     .hero p.lede { margin: 18px auto 0; font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); max-width: 56ch; }
+    .hero p.lede .accent-blue-text { color: var(--blue); font-weight: 600; }
+
+    /* ---------- Phone mockup — shows the tool actually working ---------- */
+    .hero-phone { display: flex; justify-content: center; margin: clamp(32px, 5vw, 48px) auto 0; }
+    .phone-frame {
+      width: 220px; border-radius: 32px; padding: 10px;
+      background: linear-gradient(160deg, #2a2420, #17130f);
+      border: 1px solid var(--border); box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.03) inset;
+    }
+    .phone-notch { width: 60px; height: 6px; border-radius: 999px; background: #000; margin: 0 auto 8px; }
+    .phone-screen {
+      background: var(--bg-2); border-radius: 22px; padding: 16px 14px 18px; text-align: left;
+      border: 1px solid var(--border);
+    }
+    .phone-mini-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+    .phone-mini-badge {
+      display: inline-block; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 0.85rem;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 7px; color: #1a1310;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); margin-bottom: 10px;
+    }
+    .phone-mini-score { font-family: 'Barlow Condensed'; font-weight: 800; font-size: 2rem; color: var(--text); line-height: 1; }
+    .phone-mini-score small { font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+    .phone-mini-line { height: 7px; border-radius: 4px; background: var(--surface-2); margin-top: 12px; }
+    .phone-mini-line.short { width: 62%; margin-top: 7px; }
+    .phone-mini-line.blue { background: rgba(47,155,255,0.35); }
 
     /* ---------- Tool ---------- */
     .tool { padding: clamp(28px, 4vw, 40px) 0 clamp(48px, 7vw, 80px); }
@@ -271,14 +305,61 @@
   <main id="top">
     <section class="hero">
       <div class="wrap">
-        <span class="eyebrow">Free tool · No signup · Runs in your browser</span>
+        <span class="eyebrow">Free · No signup</span>
         <h1>BS <span class="accent">Radar</span></h1>
         <p class="lede">
           Paste any AI "make money" claim, guru pitch, video title, or tool promise.
-          BS Radar pressure-tests it for hype and hands you a score — plus the
-          <strong>receipts</strong>: exactly which red flags fired, and why. No magic box.
-          Just the same BS detector I point at everything.
+          Two checks, two jobs: <strong class="accent-blue-text">Math Check</strong> tells you whether the actual
+          number is realistic. <strong>Hype Scanner</strong> tells you how hard the
+          language is selling you. No magic box — the same BS detector I point at everything.
         </p>
+
+        <div class="hero-phone" aria-hidden="true">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-mini-label">🧮 Math Check</div>
+              <div class="phone-mini-badge">🤔 A stretch</div>
+              <div class="phone-mini-score">1,000<small>subs / 30d</small></div>
+              <div class="phone-mini-line blue"></div>
+              <div class="phone-mini-line short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MATH CHECK (new) ===================== -->
+    <section class="tool" id="mathcheck">
+      <div class="wrap">
+        <div class="tool-card">
+          <div class="tool-label">🧮 Math Check — does the number add up?</div>
+          <div class="tool-sub">Paste a claim with a specific number in it (income, growth rate, timeline, whatever). This one doesn't scan for hype language — it checks whether the actual number is realistic.</div>
+
+          <textarea id="mcClaim" placeholder="e.g. This method got me from 0 to 1,000 subscribers in 30 days using this exact playbook."></textarea>
+
+          <div class="run-row">
+            <button class="btn-primary" id="mcRunBtn">Check the math →</button>
+            <button class="btn-ghost" id="mcClearBtn">Clear</button>
+          </div>
+
+          <div class="results" id="mcResults" aria-live="polite">
+            <div class="verdict-top" style="grid-template-columns: 1fr;">
+              <div class="verdict-meta">
+                <span class="verdict-badge" id="mcBadge">—</span>
+                <p class="verdict-say"><span id="mcCategory" style="color:var(--muted);font-size:0.9rem;"></span></p>
+                <p class="verdict-say" id="mcExplanation"></p>
+                <p class="verdict-say" id="mcBenchmark" style="color:var(--muted);font-size:0.92rem;margin-top:8px;"></p>
+              </div>
+            </div>
+            <div class="disclaimer">
+              <b>How this works:</b> Math Check sends your text to an AI model that pulls out the specific
+              number and compares it to realistic benchmarks it knows. It's an estimate, not a verified fact —
+              always go get the actual receipts yourself before trusting a number with your time or money.
+            </div>
+          </div>
+          <div class="disclaimer" id="mcError" style="display:none;"></div>
+        </div>
       </div>
     </section>
 
@@ -286,8 +367,8 @@
     <section class="tool">
       <div class="wrap">
         <div class="tool-card">
-          <div class="tool-label">Drop the claim in here 👇</div>
-          <div class="tool-sub">A headline, a course pitch, a thread, a tool's landing-page copy — whatever someone's trying to sell you on.</div>
+          <div class="tool-label">🚩 Hype Scanner — drop the claim in here 👇</div>
+          <div class="tool-sub">A headline, a course pitch, a thread, a tool's landing-page copy — whatever someone's trying to sell you on. This one scans the <em>language</em> for hype patterns.</div>
 
           <textarea id="claim" placeholder="e.g. Make $10,000/month with AI on complete autopilot — no skills, no experience needed. The secret the gurus don't want you to know. Free for a limited time, just drop your email before it's gone!"></textarea>
 
@@ -766,6 +847,70 @@
     chipsEl.addEventListener("click", e => {
       const btn = e.target.closest(".chip"); if (!btn) return;
       elClaim.value = EXAMPLES[+btn.dataset.i].text; run();
+    });
+
+    /* ============================================================
+       MATH CHECK — calls the /api/math-check backend (xAI grok-4-fast).
+       ============================================================ */
+    const mcClaim = document.getElementById("mcClaim");
+    const mcResults = document.getElementById("mcResults");
+    const mcError = document.getElementById("mcError");
+    const mcRunBtn = document.getElementById("mcRunBtn");
+
+    const MC_VERDICT_STYLE = {
+      checks_out:     { emoji: "✅", label: "Checks out",      color: "var(--pos)" },
+      stretch:        { emoji: "🤔", label: "A stretch",       color: "var(--warn)" },
+      unrealistic:    { emoji: "🚩", label: "Unrealistic",     color: "var(--neg)" },
+      no_number_found:{ emoji: "❓", label: "No number found", color: "var(--muted)" }
+    };
+
+    async function runMathCheck() {
+      const text = mcClaim.value.trim();
+      if (!text) { mcClaim.focus(); return; }
+
+      mcError.style.display = "none";
+      mcResults.classList.remove("show");
+      mcRunBtn.disabled = true;
+      mcRunBtn.textContent = "Checking…";
+
+      try {
+        const resp = await fetch("/api/math-check", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ claim: text })
+        });
+        const data = await resp.json();
+
+        if (!resp.ok) {
+          mcError.textContent = data.error || "Something went wrong. Try again.";
+          mcError.style.display = "block";
+          return;
+        }
+
+        const v = MC_VERDICT_STYLE[data.verdict] || MC_VERDICT_STYLE.no_number_found;
+        const badge = document.getElementById("mcBadge");
+        badge.textContent = v.emoji + " " + v.label;
+        badge.style.background = v.color;
+
+        document.getElementById("mcCategory").textContent = data.category ? `Category: ${data.category}` : "";
+        document.getElementById("mcExplanation").textContent = data.explanation || "";
+        document.getElementById("mcBenchmark").textContent = data.realisticBenchmark ? `Realistic benchmark: ${data.realisticBenchmark}` : "";
+
+        mcResults.classList.add("show");
+        mcResults.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      } catch (err) {
+        mcError.textContent = "Couldn't reach the math-check service. Try again in a bit.";
+        mcError.style.display = "block";
+      } finally {
+        mcRunBtn.disabled = false;
+        mcRunBtn.textContent = "Check the math →";
+      }
+    }
+
+    mcRunBtn.addEventListener("click", runMathCheck);
+    mcClaim.addEventListener("keydown", e => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runMathCheck(); });
+    document.getElementById("mcClearBtn").addEventListener("click", () => {
+      mcClaim.value = ""; mcResults.classList.remove("show"); mcError.style.display = "none"; mcClaim.focus();
     });
 
     /* ---------- Footer / links ---------- */
