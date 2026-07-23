@@ -43,9 +43,9 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: `Claim is too long (max ${MAX_CLAIM_LEN} characters).` });
   }
 
-  const apiKey = process.env.XAI_API_KEY;
+  const apiKey = process.env.xai_api_key1 || process.env.XAI_API_KEY;
   if (!apiKey) {
-    console.error("XAI_API_KEY is not set in the environment.");
+    console.error("No xAI API key found in environment (checked xai_api_key1, XAI_API_KEY).");
     return res.status(500).json({ error: "Math-check isn't configured yet. Try again later." });
   }
 
